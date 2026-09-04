@@ -42,6 +42,14 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
+// Health check endpoint for uptime monitoring
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "OK",
+    message: "LogiTrack backend is running"
+  });
+});
+
 // Swagger Documentation UI & JSON
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
   customSiteTitle: 'LogiTrack API Documentation',
@@ -54,14 +62,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
 app.get('/api-docs.json', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.send(swaggerSpec);
-});
-
-// Health check endpoint for uptime monitoring
-app.get('/health', (req, res) => {
-  res.status(200).json({
-    status: 'OK',
-    message: 'LogiTrack backend is running'
-  });
 });
 
 // Mount routers
