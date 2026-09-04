@@ -56,6 +56,14 @@ app.get('/api-docs.json', (req, res) => {
   res.send(swaggerSpec);
 });
 
+// Health check endpoint for uptime monitoring
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'OK',
+    message: 'LogiTrack backend is running'
+  });
+});
+
 // Mount routers
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/packages', require('./routes/packageRoutes'));
