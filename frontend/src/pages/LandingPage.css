@@ -1928,9 +1928,18 @@ body {
   top: calc(100vh - 80px);
   height: 80px;
   width: 100%;
-  z-index: 10;
+  z-index: 20;
   margin-bottom: -80px;
-  /* pull up so it doesn't create extra space */
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  contain: layout paint;
+}
+
+@supports (height: 100dvh) {
+  .scroll-truck-wrapper {
+    top: calc(100dvh - 80px);
+  }
 }
 
 /* ---------- Animated grid background (hero) ---------- */
@@ -2079,19 +2088,27 @@ html.light .hero-bg-grid {
   border-radius: 3px;
 }
 
-/* Dashed centre line */
+/* Dashed centre line with stream animation */
+@keyframes truck-road-dash {
+  to {
+    background-position: -44px 0;
+  }
+}
+
 .scroll-truck-road-dash {
   position: absolute;
   top: 50%;
-  left: 4%;
-  right: 4%;
+  left: 0;
+  right: 0;
   height: 2px;
   transform: translateY(-50%);
   background: repeating-linear-gradient(90deg,
       rgba(255, 255, 255, 0.55) 0px,
       rgba(255, 255, 255, 0.55) 22px,
       transparent 22px,
-      transparent 42px);
+      transparent 44px);
+  background-size: 44px 2px;
+  animation: truck-road-dash 0.6s linear infinite;
 }
 
 /* Light-mode road */
@@ -2108,7 +2125,8 @@ html.light .scroll-truck-road-dash {
       rgba(71, 85, 105, 0.5) 0px,
       rgba(71, 85, 105, 0.5) 22px,
       transparent 22px,
-      transparent 42px);
+      transparent 44px);
+  background-size: 44px 2px;
 }
 
 /* Truck unit — absolutely positioned along the road, translates left→right via GPU transform */
@@ -2118,7 +2136,11 @@ html.light .scroll-truck-road-dash {
   /* sits on top of the road stripe */
   left: 0;
   width: 130px;
+  transform: translate3d(0, 0, 0);
   will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  pointer-events: none;
 }
 
 @media (min-width: 640px) {
@@ -2133,6 +2155,37 @@ html.light .scroll-truck-road-dash {
   }
 }
 
+/* Truck suspension & wheel keyframes */
+@keyframes truck-rumble {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  25% {
+    transform: translateY(-1px);
+  }
+  75% {
+    transform: translateY(0.5px);
+  }
+}
+
+.scroll-truck-body {
+  animation: truck-rumble 0.6s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+@keyframes truck-wheel-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.scroll-truck-wheel {
+  animation: truck-wheel-spin 0.45s linear infinite;
+}
+
 .scroll-truck-svg {
   display: block;
   width: 100%;
@@ -2144,9 +2197,14 @@ html.light .scroll-truck-svg {
   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.18));
 }
 
-/* Reduced-motion: freeze truck at start */
+/* Reduced-motion: freeze truck at start and disable loop animations */
 @media (prefers-reduced-motion: reduce) {
   .scroll-truck-unit {
     transition: none !important;
+  }
+  .scroll-truck-body,
+  .scroll-truck-wheel,
+  .scroll-truck-road-dash {
+    animation: none !important;
   }
 }
