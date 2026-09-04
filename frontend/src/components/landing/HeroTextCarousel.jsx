@@ -109,7 +109,7 @@ export default function HeroTextCarousel() {
       aria-label="LogiTrack Key Highlights"
     >
       {/* Slide Text Container */}
-      <div className="relative w-full min-h-[150px] sm:min-h-[165px] md:min-h-[175px] flex items-center justify-center overflow-hidden px-2">
+      <div className="relative w-full min-h-[160px] sm:min-h-[165px] md:min-h-[175px] flex items-center justify-center overflow-visible sm:overflow-hidden px-2 py-0.5">
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
             key={currentIndex}
@@ -118,7 +118,7 @@ export default function HeroTextCarousel() {
             initial="enter"
             animate="center"
             exit="exit"
-            className="w-full flex flex-col items-center justify-center text-center space-y-2.5 sm:space-y-3"
+            className="w-full flex flex-col items-center justify-center text-center space-y-2 sm:space-y-3"
           >
             {/* Small Badge / Tag */}
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 dark:bg-orange-500/15 border border-orange-500/20 text-[#ea580c] dark:text-[#fb923c] text-[11px] sm:text-xs font-semibold tracking-wider uppercase backdrop-blur-md">
@@ -140,7 +140,7 @@ export default function HeroTextCarousel() {
       </div>
 
       {/* Carousel Navigation (Arrows + Dots / Dash Bar) - Shiprocket Style */}
-      <div className="mt-4 flex items-center justify-center gap-3 sm:gap-4">
+      <div className="mt-2.5 sm:mt-4 flex items-center justify-center gap-3 sm:gap-4">
         {/* Previous Button */}
         <button
           type="button"

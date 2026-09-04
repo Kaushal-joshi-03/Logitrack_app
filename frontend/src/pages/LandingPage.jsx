@@ -1500,7 +1500,7 @@ function LandingPageContent() {
           {/* Canvas pinball bubble physics (z-0, behind grid z-0 and content z-10) */}
           <HeroPinballBubbles />
 
-          <div className="flex h-[calc(100dvh-76px)] w-full flex-col overflow-hidden">
+          <div className="flex min-h-[calc(100dvh-76px)] sm:h-[calc(100dvh-76px)] w-full flex-col overflow-x-hidden">
 
             {/* ==================================================
           MAIN
@@ -1511,7 +1511,8 @@ function LandingPageContent() {
           relative
           min-h-0
           flex-1
-          overflow-hidden
+          overflow-x-hidden
+          sm:overflow-hidden
         "
             >
 
@@ -1532,11 +1533,15 @@ function LandingPageContent() {
             w-full
             max-w-5xl
             flex-col
-            justify-center
+            justify-start
+            sm:justify-center
             items-center
-            gap-6
-            py-4
-            px-4
+            gap-3.5
+            sm:gap-6
+            pt-3
+            pb-5
+            sm:py-4
+            px-3.5
             sm:px-6
           "
               >
@@ -1556,8 +1561,10 @@ function LandingPageContent() {
                     flex
                     flex-col
                     items-center
-                    gap-y-6
-                    p-6
+                    gap-y-3.5
+                    sm:gap-y-6
+                    py-5
+                    px-4
                     sm:p-10
                     rounded-3xl
                     border
@@ -1655,7 +1662,7 @@ function LandingPageContent() {
                 </div>
 
                 {/* FEATURE STRIP */}
-                <div className="w-full max-w-5xl">
+                <div className="w-full max-w-5xl mt-6 sm:mt-0">
                   <HomeFeatureStrip />
                 </div>
 
