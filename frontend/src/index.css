@@ -1,0 +1,1046 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  transition: background-color 0.25s ease, color 0.25s ease;
+  scroll-behavior: smooth;
+  margin: 0;
+  min-width: 320px;
+}
+
+/* =========================================================
+   DARK MODE (DEFAULT)
+   ========================================================= */
+html.dark,
+html.dark body {
+  background-color: #050505 !important;
+  color: #ffffff !important;
+  color-scheme: dark;
+}
+
+html.dark header,
+html.dark .bg-\[\#080808\] {
+  background-color: #080808 !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  color: #ffffff !important;
+}
+
+html.dark .bg-\[\#050505\],
+html.dark .bg-\[\#090909\],
+html.dark .bg-\[\#0b0b0b\],
+html.dark .bg-\[\#0d0d0d\],
+html.dark .bg-\[\#0e0e0e\] {
+  background-color: #050505 !important;
+  color: #ffffff !important;
+}
+
+html.dark .bg-black\/70,
+html.dark .bg-black\/60,
+html.dark .bg-black\/40,
+html.dark .bg-black\/30,
+html.dark .bg-black\/20 {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  color: #ffffff !important;
+}
+
+/* Enhanced Dark Mode Card & Box Borders (Crisp Visibility) */
+html.dark .border-white\/5,
+html.dark .border-white\/10,
+html.dark .border-white\/15 {
+  border-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+html.dark .border-white\/20,
+html.dark .border-white\/30 {
+  border-color: rgba(255, 255, 255, 0.26) !important;
+}
+
+/* Dark Mode Text Contrast - Clear WCAG AA Contrast */
+html.dark .text-white {
+  color: #ffffff !important;
+}
+
+html.dark .text-slate-100,
+html.dark .text-slate-200,
+html.dark .text-slate-300 {
+  color: #f1f5f9 !important;
+}
+
+html.dark .text-slate-400 {
+  color: #cbd5e1 !important;
+}
+
+html.dark .text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+html.dark .text-slate-600 {
+  color: #94a3b8 !important;
+}
+
+html.dark .text-slate-700 {
+  color: #cbd5e1 !important;
+}
+
+/* =========================================================
+   LIGHT MODE
+   ========================================================= */
+html.light,
+html.light body {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+  color-scheme: light;
+}
+
+/* Headers & structural surfaces */
+html.light header,
+html.light .bg-\[\#080808\] {
+  background-color: #ffffff !important;
+  border-color: rgba(15, 23, 42, 0.14) !important;
+  color: #0f172a !important;
+}
+
+html.light .bg-\[\#050505\],
+html.light .bg-\[\#090909\],
+html.light .bg-\[\#0b0b0b\],
+html.light .bg-\[\#0d0d0d\],
+html.light .bg-\[\#0e0e0e\] {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+/* Light mode floating cards, metrics, and pipeline */
+html.light .bg-black\/70,
+html.light .bg-black\/60,
+html.light .bg-black\/40,
+html.light .bg-black\/30,
+html.light .bg-black\/20,
+html.light .bg-white\/\[0\.02\],
+html.light .bg-white\/\[0\.025\],
+html.light .bg-white\/\[0\.03\],
+html.light .bg-white\/\[0\.04\] {
+  background-color: #ffffff !important;
+  border-color: rgba(15, 23, 42, 0.14) !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06) !important;
+  color: #0f172a !important;
+}
+
+/* Light Mode Borders */
+html.light .border-white\/5,
+html.light .border-white\/10,
+html.light .border-white\/15,
+html.light .border-white\/20,
+html.light .border-white\/30 {
+  border-color: rgba(15, 23, 42, 0.14) !important;
+}
+
+/* Light mode text contrast overrides */
+html.light .text-slate-100,
+html.light .text-slate-200,
+html.light .text-slate-300 {
+  color: #0f172a !important;
+}
+
+html.light .text-slate-400,
+html.light .text-slate-500 {
+  color: #475569 !important;
+}
+
+html.light .text-slate-600,
+html.light .text-slate-700 {
+  color: #334155 !important;
+}
+
+/* In light mode: ensure headings and body text default to dark readable slate */
+html.light h1,
+html.light h2,
+html.light h3,
+html.light h4,
+html.light h5,
+html.light h6 {
+  color: #0f172a;
+}
+
+/* Ensure solid brand & solid colored action buttons ALWAYS have crisp white text */
+button.bg-red-500,
+button.bg-red-600,
+a.bg-red-500,
+a.bg-red-600,
+button.bg-\[\#ff2438\],
+a.bg-\[\#ff2438\],
+button.bg-\[\#ff2538\],
+a.bg-\[\#ff2538\],
+button.bg-\[\#ff1f35\],
+a.bg-\[\#ff1f35\],
+.bg-red-500:not([class*="/"]):not([class*="bg-red-500/"]),
+.bg-red-600:not([class*="/"]):not([class*="bg-red-600/"]),
+.bg-\[\#ff2438\],
+.bg-\[\#ff2538\],
+.bg-\[\#ff1f35\] {
+  color: #ffffff !important;
+}
+
+button.bg-red-500 *,
+button.bg-red-600 *,
+a.bg-red-500 *,
+a.bg-red-600 *,
+button.bg-\[\#ff2438\] *,
+a.bg-\[\#ff2438\] *,
+button.bg-\[\#ff2538\] *,
+a.bg-\[\#ff2538\] *,
+button.bg-\[\#ff1f35\] *,
+a.bg-\[\#ff1f35\] *,
+.bg-red-500:not([class*="/"]):not([class*="bg-red-500/"]) *,
+.bg-red-600:not([class*="/"]):not([class*="bg-red-600/"]) *,
+.bg-\[\#ff2438\] *,
+.bg-\[\#ff2538\] *,
+.bg-\[\#ff1f35\] * {
+  color: #ffffff !important;
+}
+
+/* Light mode text-white inside general body content vs solid backgrounds */
+html.light h1.text-white,
+html.light h2.text-white,
+html.light h3.text-white,
+html.light h4.text-white,
+html.light p.text-white,
+html.light span.text-white:not([class*="bg-red-500"]):not([class*="bg-red-600"]):not(button *):not(a *) {
+  color: #0f172a !important;
+}
+
+/* In light mode: ensure red text on tinted red badges and buttons is rich and high contrast */
+html.light .text-red-500,
+html.light .text-red-600 {
+  color: #dc2626 !important;
+}
+
+html.light [class*="bg-red-500/"][class*="text-red-"],
+html.light [class*="bg-red-500/"] .text-red-500,
+html.light [class*="bg-red-500/"] .text-red-600,
+html.light button[class*="bg-red-500/"],
+html.light button[class*="bg-red-500/"] * {
+  color: #dc2626 !important;
+}
+
+/* Dark login action button in light mode */
+html.light button[class*="bg-\[\#111111\]"],
+html.light .bg-\[\#111111\] {
+  background-color: #111111 !important;
+  color: #ffffff !important;
+}
+
+html.light button[class*="bg-\[\#111111\]"] *,
+html.light .bg-\[\#111111\] * {
+  color: #ffffff !important;
+}
+
+/* Form inputs styling */
+html.dark input,
+html.dark textarea,
+html.dark select {
+  border-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+html.light input,
+html.light textarea,
+html.light select {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Scoped Dark Mode for Leaflet Map Tiles & Attribution */
+.dark-map-tiles .leaflet-tile-pane {
+  filter: invert(90%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
+.dark-map-tiles .leaflet-control-attribution {
+  background-color: rgba(0, 0, 0, 0.65) !important;
+  color: #94a3b8 !important;
+  font-size: 10px !important;
+  border-top-left-radius: 6px;
+  padding: 2px 8px !important;
+  backdrop-filter: blur(4px);
+}
+
+.dark-map-tiles .leaflet-control-attribution a {
+  color: #cbd5e1 !important;
+  text-decoration: underline;
+  text-decoration-color: rgba(203, 213, 225, 0.4);
+}
+
+.dark-map-tiles .leaflet-control-attribution a:hover {
+  color: #ffffff !important;
+}
+
+/* =========================================================
+   PARTNER MARQUEE ANIMATIONS
+   ========================================================= */
+@keyframes marquee-left {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translateX(-50%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-marquee-left {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: marquee-left 34s linear infinite;
+}
+
+.animate-marquee-right {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: marquee-right 34s linear infinite;
+}
+
+.animate-marquee-left:hover,
+.animate-marquee-right:hover {
+  animation-play-state: paused;
+}
+
+/* =========================================================
+   LIVE LOGISTICS DOCK ANIMATIONS
+   ========================================================= */
+@keyframes dock-float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.animate-dock-float {
+  animation: dock-float 4s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes dock-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(300%);
+  }
+}
+
+.animate-dock-shimmer {
+  animation: dock-shimmer 4.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes lightning-charge {
+  0%, 100% {
+    filter: drop-shadow(0 0 1px rgba(239, 68, 68, 0.3));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(255, 36, 56, 0.85));
+    transform: scale(1.08);
+  }
+}
+
+.animate-lightning-charge {
+  animation: lightning-charge 2.4s ease-in-out infinite;
+}
+
+@keyframes shield-glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 1px rgba(249, 115, 22, 0.3));
+    opacity: 0.92;
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(249, 115, 22, 0.85));
+    opacity: 1;
+  }
+}
+
+.animate-shield-glow {
+  animation: shield-glow 3s ease-in-out infinite;
+}
+
+/* =========================================================
+   SCOPED DARK FOOTER (Always Dark in both Light & Dark Mode)
+   ========================================================= */
+footer,
+html.light footer,
+html.dark footer {
+  background-color: #060606 !important;
+  color: #94a3b8 !important;
+}
+
+footer a,
+html.light footer a,
+html.dark footer a {
+  color: #94a3b8 !important;
+}
+
+footer a:hover,
+html.light footer a:hover,
+html.dark footer a:hover {
+  color: #ff2438 !important;
+}
+
+footer p,
+html.light footer p,
+html.dark footer p {
+  color: #94a3b8 !important;
+}
+
+footer strong,
+html.light footer strong,
+html.dark footer strong {
+  color: #f1f5f9 !important;
+}
+
+footer h3,
+footer h4,
+footer p.footer-heading,
+footer .footer-title,
+html.light footer h3,
+html.light footer h4,
+html.light footer p.footer-heading,
+html.light footer .footer-title,
+html.dark footer .footer-title {
+  color: #ffffff !important;
+}
+
+footer .bottom-bar,
+html.light footer .bottom-bar,
+html.dark footer .bottom-bar {
+  background-color: #030303 !important;
+  border-top-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* =========================================================
+   FOOTER APP STORE BUTTONS — Always Dark, Always Legible
+   (Footer is always dark, so these must stay dark-themed)
+   ========================================================= */
+footer .app-store-btn,
+html.light footer .app-store-btn,
+html.dark footer .app-store-btn {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  color: #ffffff !important;
+}
+
+footer .app-store-btn:hover,
+html.light footer .app-store-btn:hover,
+html.dark footer .app-store-btn:hover {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 36, 56, 0.45) !important;
+}
+
+footer .app-store-btn *,
+html.light footer .app-store-btn *,
+html.dark footer .app-store-btn * {
+  color: inherit !important;
+}
+
+footer .app-store-btn .app-store-label,
+html.light footer .app-store-btn .app-store-label,
+html.dark footer .app-store-btn .app-store-label {
+  color: #94a3b8 !important;
+}
+
+footer .app-store-btn .app-store-name,
+html.light footer .app-store-btn .app-store-name,
+html.dark footer .app-store-btn .app-store-name {
+  color: #ffffff !important;
+}
+
+/* =========================================================
+   HERO BUBBLE ORBS — Individual floating circles + glass diffusion
+   ========================================================= */
+
+/* ── Individual orb base ─────────────────────────────────── */
+.bubble-orb {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+}
+
+/* ── Glass diffusion overlay ─────────────────────────────── */
+/*   Sits above orbs (z:1), below hero content (z:10).        */
+/*   backdrop-filter diffuses the orbs into a glowing wash.   */
+.bubble-glass {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  /* Light mode: white-tinted glass */
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(65px);
+  -webkit-backdrop-filter: blur(65px);
+}
+
+/* Dark mode: near-black tinted glass so glow pops on dark bg */
+html.dark .bubble-glass {
+  background: rgba(5, 5, 5, 0.22);
+}
+
+/* ── Keyframe A: gentle diagonal float (↘ then ↖) ────────── */
+@keyframes bubble-drift-a {
+  0%   { transform: translate3d(0px,   0px,  0) scale(1.00); }
+  25%  { transform: translate3d(28px, -18px, 0) scale(1.04); }
+  50%  { transform: translate3d(38px,  22px, 0) scale(0.97); }
+  75%  { transform: translate3d(-12px, 32px, 0) scale(1.03); }
+  100% { transform: translate3d(0px,   0px,  0) scale(1.00); }
+}
+
+/* ── Keyframe B: wide lateral sway (← →) ─────────────────── */
+@keyframes bubble-drift-b {
+  0%   { transform: translate3d(0px,   0px,  0) scale(1.00); }
+  30%  { transform: translate3d(-42px, 14px, 0) scale(1.05); }
+  55%  { transform: translate3d(20px, -28px, 0) scale(0.95); }
+  80%  { transform: translate3d(48px,  18px, 0) scale(1.03); }
+  100% { transform: translate3d(0px,   0px,  0) scale(1.00); }
+}
+
+/* ── Keyframe C: vertical breathe (↑ pulse ↓) ────────────── */
+@keyframes bubble-drift-c {
+  0%   { transform: translate3d(0px,   0px,  0) scale(1.00); }
+  35%  { transform: translate3d(16px, -38px, 0) scale(1.06); }
+  65%  { transform: translate3d(-22px, 28px, 0) scale(0.94); }
+  100% { transform: translate3d(0px,   0px,  0) scale(1.00); }
+}
+
+/* ── Keyframe D: slow counter-diagonal (↙ then ↗) ────────── */
+@keyframes bubble-drift-d {
+  0%   { transform: translate3d(0px,   0px,  0) scale(1.00); }
+  40%  { transform: translate3d(-32px,-24px, 0) scale(1.04); }
+  70%  { transform: translate3d(24px,  36px, 0) scale(0.96); }
+  100% { transform: translate3d(0px,   0px,  0) scale(1.00); }
+}
+
+/* ── Accessibility ────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .bubble-orb { animation: none !important; }
+}
+
+@media (min-width: 768px) {
+  .hero-blob-mesh {
+    filter: blur(120px);
+    -webkit-filter: blur(120px);
+  }
+}
+
+@media (min-width: 1200px) {
+  .hero-blob-mesh {
+    filter: blur(140px);
+    -webkit-filter: blur(140px);
+  }
+}
+
+/* Base blob styles — shared across all zones */
+.hero-blob {
+  will-change: transform, border-radius, opacity;
+  transform: translate3d(0, 0, 0);
+}
+
+/* ── Keyframes: 9 unique drift paths ─────────────────────────── */
+
+/* A: slow wide sweep — top-left → centre-right */
+@keyframes hero-drift-a {
+  0% {
+    transform: translate3d(0px, 0px, 0) scale(1);
+    border-radius: 44% 56% 68% 32% / 48% 42% 58% 52%;
+    opacity: 0.88;
+  }
+
+  30% {
+    transform: translate3d(55px, 38px, 0) scale(1.10);
+    border-radius: 60% 40% 42% 58% / 56% 60% 40% 44%;
+    opacity: 1;
+  }
+
+  65% {
+    transform: translate3d(-35px, 55px, 0) scale(0.93);
+    border-radius: 38% 62% 58% 42% / 44% 58% 42% 56%;
+    opacity: 0.82;
+  }
+
+  100% {
+    transform: translate3d(0px, 0px, 0) scale(1);
+    border-radius: 44% 56% 68% 32% / 48% 42% 58% 52%;
+    opacity: 0.88;
+  }
+}
+
+/* B: wide arc — top-right inward */
+@keyframes hero-drift-b {
+  0% {
+    transform: translate3d(0px, 0px, 0) scale(1) rotate(0deg);
+    border-radius: 62% 38% 34% 66% / 58% 34% 66% 42%;
+    opacity: 0.85;
+  }
+
+  40% {
+    transform: translate3d(-60px, 45px, 0) scale(1.13) rotate(-16deg);
+    border-radius: 42% 58% 62% 38% / 38% 62% 38% 62%;
+    opacity: 1;
+  }
+
+  78% {
+    transform: translate3d(40px, -30px, 0) scale(0.96) rotate(10deg);
+    border-radius: 72% 28% 48% 52% / 52% 48% 52% 48%;
+    opacity: 0.80;
+  }
+
+  100% {
+    transform: translate3d(0px, 0px, 0) scale(1) rotate(0deg);
+    border-radius: 62% 38% 34% 66% / 58% 34% 66% 42%;
+    opacity: 0.85;
+  }
+}
+
+/* C: centre pulsing bloom */
+@keyframes hero-drift-c {
+  0% {
+    transform: translate3d(0px, 0px, 0) scale(1);
+    border-radius: 50% 50% 50% 50%;
+    opacity: 0.80;
+  }
+
+  50% {
+    transform: translate3d(30px, -40px, 0) scale(1.15);
+    border-radius: 34% 66% 66% 34% / 52% 64% 36% 48%;
+    opacity: 0.95;
+  }
+
+  100% {
+    transform: translate3d(0px, 0px, 0) scale(1);
+    border-radius: 50% 50% 50% 50%;
+    opacity: 0.80;
+  }
+}
+
+/* D: bottom-left slow drift upward */
+@keyframes hero-drift-d {
+  0% {
+    transform: translate3d(0px, 0px, 0) scale(1) rotate(0deg);
+    border-radius: 46% 54% 64% 36% / 42% 46% 54% 58%;
+    opacity: 0.90;
+  }
+
+  35% {
+    transform: translate3d(48px, -52px, 0) scale(1.11) rotate(12deg);
+    border-radius: 58% 42% 40% 60% / 58% 42% 58% 42%;
+    opacity: 1;
+  }
+
+  70% {
+    transform: translate3d(-28px, -38px, 0) scale(0.94) rotate(-10deg);
+    border-radius: 36% 64% 58% 42% / 46% 54% 46% 54%;
+    opacity: 0.84;
+  }
+
+  100% {
+    transform: translate3d(0px, 0px, 0) scale(1) rotate(0deg);
+    border-radius: 46% 54% 64% 36% / 42% 46% 54% 58%;
+    opacity: 0.90;
+  }
+}
+
+/* E: bottom-right counter-drift */
+@keyframes hero-drift-e {
+  0% {
+    transform: translate3d(0px, 0px, 0) scale(1);
+    border-radius: 58% 42% 36% 64% / 54% 36% 64% 46%;
+    opacity: 0.87;
+  }
+
+  45% {
+    transform: translate3d(-50px, -42px, 0) scale(1.09);
+    border-radius: 44% 56% 60% 40% / 42% 60% 40% 58%;
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate3d(0px, 0px, 0) scale(1);
+    border-radius: 58% 42% 36% 64% / 54% 36% 64% 46%;
+    opacity: 0.87;
+  }
+}
+
+/* F: peach mid-layer slow breathe */
+@keyframes hero-drift-f {
+  0% {
+    transform: translate3d(0px, 0px, 0) scale(1);
+    border-radius: 52% 48% 54% 46%;
+    opacity: 0.78;
+  }
+
+  55% {
+    transform: translate3d(38px, 28px, 0) scale(1.08);
+    border-radius: 64% 36% 44% 56% / 48% 62% 38% 52%;
+    opacity: 0.92;
+  }
+
+  100% {
+    transform: translate3d(0px, 0px, 0) scale(1);
+    border-radius: 52% 48% 54% 46%;
+    opacity: 0.78;
+  }
+}
+
+/* G: charcoal top, slow rotation */
+@keyframes hero-drift-g {
+  0% {
+    transform: translate3d(0px, 0px, 0) scale(1) rotate(0deg);
+    border-radius: 48% 52% 58% 42% / 46% 54% 46% 54%;
+    opacity: 0.82;
+  }
+
+  50% {
+    transform: translate3d(-42px, 32px, 0) scale(1.06) rotate(-14deg);
+    border-radius: 66% 34% 42% 58% / 54% 44% 56% 46%;
+    opacity: 0.94;
+  }
+
+  100% {
+    transform: translate3d(0px, 0px, 0) scale(1) rotate(0deg);
+    border-radius: 48% 52% 58% 42% / 46% 54% 46% 54%;
+    opacity: 0.82;
+  }
+}
+
+/* H: charcoal bottom-left — gentle lateral float */
+@keyframes hero-drift-h {
+  0% {
+    transform: translate3d(0px, 0px, 0) scale(1);
+    opacity: 0.80;
+  }
+
+  50% {
+    transform: translate3d(32px, -24px, 0) scale(1.07);
+    opacity: 0.92;
+  }
+
+  100% {
+    transform: translate3d(0px, 0px, 0) scale(1);
+    opacity: 0.80;
+  }
+}
+
+/* I: charcoal bottom-right — gentle lateral float */
+@keyframes hero-drift-i {
+  0% {
+    transform: translate3d(0px, 0px, 0) scale(1);
+    opacity: 0.78;
+  }
+
+  50% {
+    transform: translate3d(-28px, -20px, 0) scale(1.06);
+    opacity: 0.90;
+  }
+
+  100% {
+    transform: translate3d(0px, 0px, 0) scale(1);
+    opacity: 0.78;
+  }
+}
+
+/* ── Animation assignments — staggered durations & negative delays ── */
+
+.hero-blob--a {
+  animation: hero-drift-a 14s ease-in-out infinite;
+  animation-delay: -2s;
+}
+
+.hero-blob--b {
+  animation: hero-drift-b 17s ease-in-out infinite;
+  animation-delay: -5s;
+}
+
+.hero-blob--c {
+  animation: hero-drift-c 11s ease-in-out infinite alternate;
+  animation-delay: -3s;
+}
+
+.hero-blob--d {
+  animation: hero-drift-d 15s ease-in-out infinite;
+  animation-delay: -8s;
+}
+
+.hero-blob--e {
+  animation: hero-drift-e 13s ease-in-out infinite alternate;
+  animation-delay: -1s;
+}
+
+.hero-blob--f {
+  animation: hero-drift-f 19s ease-in-out infinite alternate;
+  animation-delay: -6s;
+}
+
+.hero-blob--g {
+  animation: hero-drift-g 16s ease-in-out infinite;
+  animation-delay: -11s;
+}
+
+.hero-blob--h {
+  animation: hero-drift-h 20s ease-in-out infinite alternate;
+  animation-delay: -4s;
+}
+
+.hero-blob--i {
+  animation: hero-drift-i 22s ease-in-out infinite alternate;
+  animation-delay: -9s;
+}
+
+/* ── Accessibility: respect reduced-motion preference ────────── */
+@media (prefers-reduced-motion: reduce) {
+
+  .hero-blob--a,
+  .hero-blob--b,
+  .hero-blob--c,
+  .hero-blob--d,
+  .hero-blob--e,
+  .hero-blob--f,
+  .hero-blob--g,
+  .hero-blob--h,
+  .hero-blob--i {
+    animation: none;
+  }
+}
+
+/* =========================================================
+   LEGACY AURORA ZONE CLASSES — kept for backward compat
+   (used by the old HeroBlobBackground zones if any other
+   component references them)
+   ========================================================= */
+
+.aurora-mesh-container {
+  filter: blur(85px);
+  -webkit-filter: blur(85px);
+  transform: translate3d(0, 0, 0);
+  will-change: transform, filter;
+  opacity: 0.96;
+}
+
+@media (min-width: 768px) {
+  .aurora-mesh-container {
+    filter: blur(110px);
+    -webkit-filter: blur(110px);
+  }
+}
+
+@media (min-width: 1200px) {
+  .aurora-mesh-container {
+    filter: blur(130px);
+    -webkit-filter: blur(130px);
+  }
+}
+
+@keyframes aurora-flow-1 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    border-radius: 42% 58% 70% 30%/45% 45% 55% 55%;
+    opacity: 0.9;
+  }
+
+  33% {
+    transform: translate3d(45px, -30px, 0) scale(1.12) rotate(14deg);
+    border-radius: 58% 42% 38% 62%/60% 38% 62% 40%;
+    opacity: 1;
+  }
+
+  66% {
+    transform: translate3d(-30px, 35px, 0) scale(0.94) rotate(-12deg);
+    border-radius: 35% 65% 60% 40%/40% 60% 40% 60%;
+    opacity: 0.85;
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    border-radius: 42% 58% 70% 30%/45% 45% 55% 55%;
+    opacity: 0.9;
+  }
+}
+
+@keyframes aurora-flow-2 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
+    opacity: 0.88;
+  }
+
+  38% {
+    transform: translate3d(-40px, 40px, 0) scale(1.14) rotate(-18deg);
+    border-radius: 40% 60% 65% 35%/40% 65% 35% 60%;
+    opacity: 1;
+  }
+
+  74% {
+    transform: translate3d(30px, -25px, 0) scale(0.95) rotate(12deg);
+    border-radius: 70% 30% 45% 55%/55% 45% 55% 45%;
+    opacity: 0.85;
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
+    opacity: 0.88;
+  }
+}
+
+@keyframes aurora-flow-3 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    border-radius: 50%;
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: translate3d(35px, 30px, 0) scale(1.12);
+    border-radius: 30% 70% 70% 30%/50% 60% 40% 50%;
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    border-radius: 50%;
+    opacity: 0.8;
+  }
+}
+
+@keyframes aurora-flow-4 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    border-radius: 55% 45% 60% 40%/45% 55% 45% 55%;
+    opacity: 0.9;
+  }
+
+  45% {
+    transform: translate3d(-30px, -25px, 0) scale(1.1) rotate(8deg);
+    border-radius: 45% 55% 40% 60%/55% 45% 60% 40%;
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    border-radius: 55% 45% 60% 40%/45% 55% 45% 55%;
+    opacity: 0.9;
+  }
+}
+
+@keyframes aurora-flow-5 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.85;
+  }
+
+  50% {
+    transform: translate3d(25px, -18px, 0) scale(1.08);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.85;
+  }
+}
+
+@keyframes aurora-flow-6 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.85;
+  }
+
+  50% {
+    transform: translate3d(-20px, 18px, 0) scale(1.08);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.85;
+  }
+}
+
+.aurora-zone-1 {
+  animation: aurora-flow-1 16s ease-in-out infinite alternate;
+  will-change: transform, border-radius, opacity;
+}
+
+.aurora-zone-2 {
+  animation: aurora-flow-2 19s ease-in-out infinite alternate;
+  will-change: transform, border-radius, opacity;
+}
+
+.aurora-zone-3 {
+  animation: aurora-flow-3 13s ease-in-out infinite alternate;
+  will-change: transform, border-radius, opacity;
+}
+
+.aurora-zone-4 {
+  animation: aurora-flow-4 17s ease-in-out infinite alternate;
+  will-change: transform, border-radius, opacity;
+}
+
+.aurora-zone-5 {
+  animation: aurora-flow-5 21s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+
+.aurora-zone-6 {
+  animation: aurora-flow-6 18s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .aurora-zone-1,
+  .aurora-zone-2,
+  .aurora-zone-3,
+  .aurora-zone-4,
+  .aurora-zone-5,
+  .aurora-zone-6 {
+    animation: none;
+  }
+}
