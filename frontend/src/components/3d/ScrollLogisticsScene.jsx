@@ -150,10 +150,10 @@ function TruckWithMainBox({ curve, progressRef, scale = 0.4 }) {
     } else {
       const travelProgress = (t - loadThreshold) / (1 - loadThreshold);
       const localT = Math.min(0.995, Math.max(0, travelProgress));
-      
+
       const pos = curve.getPointAt(localT);
       const nextPos = curve.getPointAt(Math.min(0.999, localT + 0.02));
-      
+
       group.current.position.lerp(pos, Math.min(1, delta * 6));
 
       const dx = nextPos.x - pos.x;
@@ -199,7 +199,7 @@ function TruckWithMainBox({ curve, progressRef, scale = 0.4 }) {
         <RoundedBox args={[1.0, 0.9, 1.35]} radius={0.06} smoothness={2} castShadow>
           <meshStandardMaterial color="#ffffff" roughness={0.2} metalness={0.1} />
         </RoundedBox>
-        
+
         <mesh position={[-0.51, 0, 0]} rotation={[0, -Math.PI / 2, 0]}>
           <planeGeometry args={[1.2, 0.5]} />
           <meshStandardMaterial color="#dc2626" roughness={0.2} />

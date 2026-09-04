@@ -64,38 +64,38 @@ function Navbar({ onLoginClick }) {
 
       <div
         className={`
-          flex w-full items-center justify-between px-6 transition-all duration-300 lg:px-10
-          ${scrolled ? "h-[64px]" : "h-[76px]"}
+          flex w-full items-center justify-between px-3 sm:px-4 md:px-6 transition-all duration-300 lg:px-10
+          ${scrolled ? "h-[64px]" : "h-[70px] sm:h-[76px]"}
         `}
       >
 
         {/* ================= LOGO ================= */}
-        <div className="flex items-center gap-4">
-          <Link to="/" className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <Link to="/" className="flex items-center gap-2 sm:gap-3">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
-              className="flex items-center gap-3"
+              className="flex items-center gap-2 sm:gap-3"
             >
               {/* Logo box */}
               <img
                 src="/logo.png"
                 alt="LOGITRACK"
-                className="h-10 w-10 rounded object-contain bg-white"
+                className="h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10 rounded object-contain bg-white shrink-0"
               />
 
               {/* Brand */}
               <div className="leading-none">
-                <div className="text-xl font-black tracking-tight text-slate-900 dark:text-white">
+                <div className="text-base sm:text-lg md:text-xl font-black tracking-tight text-slate-900 dark:text-white whitespace-nowrap">
                   LOGI<span className="text-red-500">TRACK</span>
                 </div>
 
                 <div className="
-                  mt-1
-                  text-[7px]
+                  mt-0.5 sm:mt-1
+                  text-[6.5px] sm:text-[7px]
                   font-bold
-                  tracking-[0.35em]
+                  tracking-[0.3em] sm:tracking-[0.35em]
                   text-slate-500
                 ">
                   ENTERPRISE
@@ -136,7 +136,7 @@ function Navbar({ onLoginClick }) {
         </nav>
 
         {/* ================= RIGHT SIDE ================= */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-2.5 md:gap-3 lg:gap-4 shrink-0">
           {/* Permanent Theme Toggle Button */}
           <motion.button
             whileHover={{ scale: 1.08 }}
@@ -147,8 +147,10 @@ function Navbar({ onLoginClick }) {
             title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
             className="
               flex
-              h-9
-              w-9
+              h-10
+              w-10
+              sm:h-10
+              sm:w-10
               items-center
               justify-center
               rounded-md
@@ -164,6 +166,7 @@ function Navbar({ onLoginClick }) {
               dark:hover:border-white/20
               hover:bg-slate-100
               dark:hover:bg-white/[0.08]
+              shrink-0
             "
           >
             {isDark ? "🌙" : "☀️"}
@@ -189,8 +192,9 @@ function Navbar({ onLoginClick }) {
                 border
                 border-slate-800
                 dark:border-white/15
-                px-3.5
-                py-1.5
+                px-2.5
+                py-2
+                sm:px-3.5
                 text-xs
                 font-bold
                 text-white
@@ -201,6 +205,8 @@ function Navbar({ onLoginClick }) {
                 hover:border-[#ff2438]
                 dark:hover:bg-[#ff2438]
                 dark:hover:border-[#ff2438]
+                whitespace-nowrap
+                shrink-0
               "
             >
               Log In
@@ -222,9 +228,11 @@ function Navbar({ onLoginClick }) {
                 className="
                   rounded
                   bg-[#ff2438]
-                  px-4
+                  px-3
                   py-2
-                  text-sm
+                  sm:px-4
+                  text-xs
+                  sm:text-sm
                   font-semibold
                   text-white
                   shadow-[0_2px_10px_rgba(255,36,56,0.25)]
@@ -232,6 +240,7 @@ function Navbar({ onLoginClick }) {
                   duration-200
                   hover:bg-red-600
                   hover:shadow-[0_4px_15px_rgba(255,36,56,0.35)]
+                  shrink-0
                 "
               >
                 Logout
@@ -246,9 +255,23 @@ function Navbar({ onLoginClick }) {
             aria-label="Toggle navigation menu"
             aria-expanded={mobileOpen}
             className="
-              flex h-9 w-9 items-center justify-center rounded-md border
-              border-slate-300 dark:border-white/10 bg-white dark:bg-white/[0.03]
-              text-slate-900 dark:text-white lg:hidden
+              flex
+              h-10
+              w-10
+              sm:h-10
+              sm:w-10
+              items-center
+              justify-center
+              rounded-md
+              border
+              border-slate-300
+              dark:border-white/10
+              bg-white
+              dark:bg-white/[0.03]
+              text-slate-900
+              dark:text-white
+              lg:hidden
+              shrink-0
             "
           >
             <span className="text-base">{mobileOpen ? "✕" : "☰"}</span>

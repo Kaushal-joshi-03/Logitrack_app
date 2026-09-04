@@ -87,11 +87,10 @@ const createCustomPin = (color, label, isCurrent = false) => {
     className: "custom-map-pin",
     html: `
       <div style="position: relative; display: flex; flex-direction: column; align-items: center; cursor: pointer;">
-        ${
-          isCurrent
-            ? `<div style="position: absolute; top: -6px; width: 32px; height: 32px; background: ${color}; border-radius: 50%; opacity: 0.35; animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;"></div>`
-            : ""
-        }
+        ${isCurrent
+        ? `<div style="position: absolute; top: -6px; width: 32px; height: 32px; background: ${color}; border-radius: 50%; opacity: 0.35; animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;"></div>`
+        : ""
+      }
         <div style="width: 16px; height: 16px; background: ${color}; border: 2.5px solid #ffffff; border-radius: 50%; box-shadow: 0 0 14px ${color}; z-index: 2;"></div>
         <div style="margin-top: 5px; white-space: nowrap; font-size: 10px; font-weight: 700; color: #ffffff; background: rgba(13, 13, 13, 0.9); border: 1px solid rgba(255,255,255,0.18); padding: 2px 7px; border-radius: 4px; letter-spacing: 0.05em; text-transform: uppercase; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
           ${label}
@@ -1036,10 +1035,9 @@ function TimelineStep({ step, last, isActive }) {
             justify-center
             rounded-full
             border
-            ${
-              step.completed
-                ? "border-red-500/40 bg-red-500/10 text-red-600 dark:text-red-500"
-                : "border-slate-300 bg-slate-100 text-slate-500 dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-400"
+            ${step.completed
+              ? "border-red-500/40 bg-red-500/10 text-red-600 dark:text-red-500"
+              : "border-slate-300 bg-slate-100 text-slate-500 dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-400"
             }
           `}
         >
@@ -1065,10 +1063,9 @@ function TimelineStep({ step, last, isActive }) {
                 h-2
                 w-2
                 rounded-full
-                ${
-                  step.completed
-                    ? "bg-red-500"
-                    : "bg-slate-400 dark:bg-slate-600"
+                ${step.completed
+                  ? "bg-red-500"
+                  : "bg-slate-400 dark:bg-slate-600"
                 }
               `}
             />
@@ -1082,10 +1079,9 @@ function TimelineStep({ step, last, isActive }) {
               h-px
               flex-1
               md:block
-              ${
-                step.completed
-                  ? "bg-red-500/30"
-                  : "bg-slate-200 dark:bg-white/10"
+              ${step.completed
+                ? "bg-red-500/30"
+                : "bg-slate-200 dark:bg-white/10"
               }
             `}
           />
@@ -1107,10 +1103,9 @@ function TimelineStep({ step, last, isActive }) {
             text-[9px]
             font-bold
             tracking-[0.15em]
-            ${
-              step.completed
-                ? "text-red-600 dark:text-red-500"
-                : "text-slate-500 dark:text-slate-400"
+            ${step.completed
+              ? "text-red-600 dark:text-red-500"
+              : "text-slate-500 dark:text-slate-400"
             }
           `}
         >

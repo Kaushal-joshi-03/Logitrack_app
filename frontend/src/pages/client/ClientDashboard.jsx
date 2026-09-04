@@ -141,9 +141,9 @@ function ClientDashboard() {
                 Track Shipment →
               </Link>
 
-             <Link
-  to="/client/create-shipment"
-  className="
+              <Link
+                to="/client/create-shipment"
+                className="
     bg-red-500
     px-5
     py-3
@@ -154,9 +154,9 @@ function ClientDashboard() {
     transition
     hover:bg-red-600
   "
->
-  + Create Shipment
-</Link>
+              >
+                + Create Shipment
+              </Link>
 
             </div>
 
@@ -325,10 +325,9 @@ function ClientDashboard() {
                               items-center
                               gap-2
                               text-xs
-                              ${
-                                shipment.status === "Delivered"
-                                  ? "text-emerald-400"
-                                  : shipment.status === "In Transit"
+                              ${shipment.status === "Delivered"
+                                ? "text-emerald-400"
+                                : shipment.status === "In Transit"
                                   ? "text-red-400"
                                   : "text-yellow-400"
                               }
@@ -459,8 +458,8 @@ function ClientDashboard() {
 
                 {/* ACCOUNT */}
                 <Link
-  to="/client/create-shipment"
-  className="
+                  to="/client/create-shipment"
+                  className="
     group
     block
     w-full
@@ -473,7 +472,7 @@ function ClientDashboard() {
     hover:border-red-500/40
     hover:bg-red-500/[0.04]
   "
->
+                >
 
                   <div className="flex items-center justify-between">
 

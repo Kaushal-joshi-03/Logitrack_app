@@ -123,9 +123,9 @@ function WarehouseDashboard() {
 
             <div className="flex gap-3">
 
-             <Link
-  to="/warehouse/scan"
-  className="
+              <Link
+                to="/warehouse/scan"
+                className="
     border
     border-white/10
     px-5
@@ -136,13 +136,13 @@ function WarehouseDashboard() {
     hover:border-red-500/40
     hover:text-white
   "
->
-  Scan Package
-</Link>
+              >
+                Scan Package
+              </Link>
 
-             <Link
-  to="/warehouse/receive"
-  className="
+              <Link
+                to="/warehouse/receive"
+                className="
     bg-red-500
     px-5
     py-3
@@ -152,9 +152,9 @@ function WarehouseDashboard() {
     transition
     hover:bg-red-600
   "
->
-  + Receive Package
-</Link>
+              >
+                + Receive Package
+              </Link>
 
             </div>
 
@@ -312,10 +312,9 @@ function WarehouseDashboard() {
                               items-center
                               gap-2
                               text-xs
-                              ${
-                                pkg.status === "Dispatched"
-                                  ? "text-emerald-400"
-                                  : pkg.status === "Ready"
+                              ${pkg.status === "Dispatched"
+                                ? "text-emerald-400"
+                                : pkg.status === "Ready"
                                   ? "text-red-400"
                                   : "text-yellow-400"
                               }
@@ -365,9 +364,9 @@ function WarehouseDashboard() {
 
               <div className="space-y-3 p-5">
 
-                  <Link
-  to="/warehouse/receive"
-  className="
+                <Link
+                  to="/warehouse/receive"
+                  className="
     group
     block
     w-full
@@ -379,7 +378,7 @@ function WarehouseDashboard() {
     transition
     hover:border-red-500/40
   "
-> 
+                >
 
 
                   <div className="flex items-center justify-between">
@@ -422,11 +421,11 @@ function WarehouseDashboard() {
 
                   <div className="flex items-center justify-between">
 
-                    
 
-       <Link
-  to="/warehouse/receive"
-  className="
+
+                    <Link
+                      to="/warehouse/receive"
+                      className="
     group
     block
     w-full
@@ -438,25 +437,25 @@ function WarehouseDashboard() {
     transition
     hover:border-red-500/40
   "
-> 
+                    >
 
 
-                  
 
-                    <div>
 
-                      <p className="text-sm font-semibold">
-                        Scan Package
-                      </p>
+                      <div>
 
-                      <p className="mt-1 text-xs text-slate-600">
-                        Scan package barcode
-                      </p>
+                        <p className="text-sm font-semibold">
+                          Scan Package
+                        </p>
 
-                    </div>
-                </Link>
+                        <p className="mt-1 text-xs text-slate-600">
+                          Scan package barcode
+                        </p>
 
-                    
+                      </div>
+                    </Link>
+
+
 
                     <span className="text-lg text-red-500">
                       →

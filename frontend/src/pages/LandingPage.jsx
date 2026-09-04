@@ -152,13 +152,15 @@ function RoleButton({ role, active, onClick }) {
       onClick={onClick}
       className={`
         flex
-        h-[68px]
+        h-[64px] sm:h-[68px]
         min-w-0
         flex-1
         flex-col
         items-center
         justify-center
         rounded-md
+        px-1 sm:px-2
+        py-1.5
         transition-all
         duration-200
         ${active
@@ -167,11 +169,11 @@ function RoleButton({ role, active, onClick }) {
         }
       `}
     >
-      <span className="mb-1 text-[13px]">
+      <span className="mb-0.5 sm:mb-1 text-[11px] sm:text-[13px]">
         ◇
       </span>
 
-      <span className="whitespace-nowrap text-[12px] font-medium">
+      <span className="whitespace-nowrap text-[10px] sm:text-[11px] md:text-[12px] font-medium leading-none">
         {role}
       </span>
     </button>
@@ -464,16 +466,16 @@ function LoginCard() {
 
         <form onSubmit={handleLoginSubmit}>
 
-          <div className="px-8 py-6">
+          <div className="px-4 sm:px-8 py-5 sm:py-6">
 
-            <h2 className="text-[15px] font-black tracking-tight">
+            <h2 className="text-[14px] sm:text-[15px] font-black tracking-tight">
               SELECT YOUR FUNCTIONAL ROLE
             </h2>
 
 
             {/* ROLE BUTTONS */}
 
-            <div className="mt-4 flex w-full gap-1.5">
+            <div className="mt-4 flex w-full gap-1.5 sm:gap-2">
 
               {roles.map((role) => (
                 <RoleButton
@@ -733,14 +735,14 @@ function LoginCard() {
 
         <form onSubmit={handleRegisterSubmit}>
 
-          <div className="px-8 py-6">
+          <div className="px-4 sm:px-8 py-5 sm:py-6">
 
-            <h2 className="text-[15px] font-black tracking-tight">
+            <h2 className="text-[14px] sm:text-[15px] font-black tracking-tight">
               CREATE YOUR ACCOUNT
             </h2>
 
             {/* ROLE BUTTONS */}
-            <div className="mt-4 flex w-full gap-1.5">
+            <div className="mt-4 flex w-full gap-1.5 sm:gap-2">
               {roles.map((role) => (
                 <RoleButton
                   key={role}
@@ -896,9 +898,9 @@ function LoginCard() {
 
         <form onSubmit={handleForgotSubmit}>
 
-          <div className="px-8 py-6">
+          <div className="px-4 sm:px-8 py-5 sm:py-6">
 
-            <h2 className="text-[15px] font-black tracking-tight">
+            <h2 className="text-[14px] sm:text-[15px] font-black tracking-tight">
               RECOVER YOUR PASSWORD
             </h2>
 
@@ -1015,9 +1017,9 @@ function LoginCard() {
 
         <div className="flex min-h-[390px] flex-col">
 
-          <div className="px-8 py-7">
+          <div className="px-4 sm:px-8 py-5 sm:py-7">
 
-            <h2 className="text-[15px] font-black">
+            <h2 className="text-[14px] sm:text-[15px] font-black">
               TRACK YOUR SHIPMENT
             </h2>
 
@@ -1393,9 +1395,8 @@ function HomeFeatureStrip() {
         {HOME_FEATURES.map((item, idx) => (
           <div
             key={item.title}
-            className={`group flex items-center gap-3 px-3.5 py-1.5 cursor-default rounded-xl transition-all duration-300 hover:scale-105 hover:bg-white/90 dark:hover:bg-white/[0.08] hover:shadow-sm ${
-              idx === 0 ? "sm:pl-1 sm:pr-4" : idx === 2 ? "sm:pr-1 sm:pl-4" : "sm:px-4"
-            }`}
+            className={`group flex items-center gap-3 px-3.5 py-1.5 cursor-default rounded-xl transition-all duration-300 hover:scale-105 hover:bg-white/90 dark:hover:bg-white/[0.08] hover:shadow-sm ${idx === 0 ? "sm:pl-1 sm:pr-4" : idx === 2 ? "sm:pr-1 sm:pl-4" : "sm:px-4"
+              }`}
           >
             <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-red-500/10 text-red-600 dark:text-red-500 transition-transform duration-200 group-hover:scale-110 group-hover:-translate-y-0.5">
               <span className={item.iconAnim || "inline-block"}>{item.icon}</span>
@@ -1703,7 +1704,7 @@ function LandingPageContent() {
       ================================================== */}
         <AnimatePresence>
           {showLoginModal && (
-            <div className="fixed inset-0 z-[500] flex items-center justify-center p-4">
+            <div className="fixed inset-0 z-[500] flex items-center justify-center p-3 sm:p-4">
               {/* Dark Backdrop */}
               <motion.div
                 initial={{ opacity: 0 }}

@@ -304,29 +304,29 @@ function AdminDashboard() {
 
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
 
-             <AdminAction
-  title="Manage Users"
-  text="View and manage registered users."
-  to="/admin/users"
-/>
+              <AdminAction
+                title="Manage Users"
+                text="View and manage registered users."
+                to="/admin/users"
+              />
 
-<AdminAction
-  title="Shipments"
-  text="Monitor all shipments across the network."
-  to="/admin/shipments"
-/>
+              <AdminAction
+                title="Shipments"
+                text="Monitor all shipments across the network."
+                to="/admin/shipments"
+              />
 
-<AdminAction
-  title="Network"
-  text="Manage warehouses and distribution hubs."
-  to="/admin/network"
-/>
+              <AdminAction
+                title="Network"
+                text="Manage warehouses and distribution hubs."
+                to="/admin/network"
+              />
 
-<AdminAction
-  title="Analytics"
-  text="View logistics performance reports."
-  to="/admin/analytics"
-/>
+              <AdminAction
+                title="Analytics"
+                text="View logistics performance reports."
+                to="/admin/analytics"
+              />
 
             </div>
 

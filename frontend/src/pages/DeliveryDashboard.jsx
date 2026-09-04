@@ -224,10 +224,9 @@ function DeliveryDashboard() {
                             py-1.5
                             text-[10px]
                             font-bold
-                            ${
-                              delivery.status === "DELIVERED"
-                                ? "bg-green-500/10 text-green-400"
-                                : delivery.status === "PICKED UP"
+                            ${delivery.status === "DELIVERED"
+                              ? "bg-green-500/10 text-green-400"
+                              : delivery.status === "PICKED UP"
                                 ? "bg-yellow-500/10 text-yellow-400"
                                 : "bg-red-500/10 text-red-400"
                             }

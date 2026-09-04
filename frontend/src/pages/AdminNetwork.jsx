@@ -373,10 +373,9 @@ function AdminNetwork() {
                           className={`
                             text-[10px]
                             font-bold
-                            ${
-                              agent.status === "ONLINE"
-                                ? "text-green-400"
-                                : "text-slate-600"
+                            ${agent.status === "ONLINE"
+                              ? "text-green-400"
+                              : "text-slate-600"
                             }
                           `}
                         >

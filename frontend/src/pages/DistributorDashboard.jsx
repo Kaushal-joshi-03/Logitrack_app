@@ -178,13 +178,12 @@ function DistributorDashboard() {
                   <div>
 
                     <span
-                      className={`inline-flex px-3 py-1 text-[10px] font-bold tracking-wide ${
-                        shipment.status === "DELIVERED"
+                      className={`inline-flex px-3 py-1 text-[10px] font-bold tracking-wide ${shipment.status === "DELIVERED"
                           ? "bg-green-500/10 text-green-400"
                           : shipment.status === "READY"
-                          ? "bg-yellow-500/10 text-yellow-400"
-                          : "bg-red-500/10 text-red-400"
-                      }`}
+                            ? "bg-yellow-500/10 text-yellow-400"
+                            : "bg-red-500/10 text-red-400"
+                        }`}
                     >
                       {shipment.status}
                     </span>
@@ -365,11 +364,10 @@ function RoutePoint({ city, type, active }) {
     <div className="relative mb-7 flex items-center gap-4">
 
       <div
-        className={`relative z-10 flex h-5 w-5 items-center justify-center rounded-full border ${
-          active
+        className={`relative z-10 flex h-5 w-5 items-center justify-center rounded-full border ${active
             ? "border-red-500 bg-[#090909]"
             : "border-slate-700"
-        }`}
+          }`}
       >
         {active && (
           <div className="h-2 w-2 rounded-full bg-red-500" />

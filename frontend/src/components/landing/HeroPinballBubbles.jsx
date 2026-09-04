@@ -15,18 +15,18 @@ import { useEffect, useRef } from "react";
 
 /* ─────────────── Palette ───────────────────────────────── */
 const ORANGE = [
-  { r: 234, g:  88, b:  12, a: 0.75 }, // rgba(234, 88, 12, 0.75) deep vibrant orange
-  { r: 249, g: 115, b:  22, a: 0.70 }, // rgba(249, 115, 22, 0.70) vibrant orange
-  { r: 255, g: 120, b:   0, a: 0.72 }, // #ff7800 electric warm orange
+  { r: 234, g: 88, b: 12, a: 0.75 }, // rgba(234, 88, 12, 0.75) deep vibrant orange
+  { r: 249, g: 115, b: 22, a: 0.70 }, // rgba(249, 115, 22, 0.70) vibrant orange
+  { r: 255, g: 120, b: 0, a: 0.72 }, // #ff7800 electric warm orange
 ];
 
 const CHARCOAL = [
-  { r:  15, g:  23, b:  42, a: 0.65 }, // rgba(15, 23, 42, 0.65) dark charcoal
-  { r:  30, g:  41, b:  59, a: 0.70 }, // rgba(30, 41, 59, 0.70) deep slate
+  { r: 15, g: 23, b: 42, a: 0.65 }, // rgba(15, 23, 42, 0.65) dark charcoal
+  { r: 30, g: 41, b: 59, a: 0.70 }, // rgba(30, 41, 59, 0.70) deep slate
 ];
 
-const TOTAL    = 52; // Raised to 45–60 range for richer, continuous screen-wide density
-const BLUR_PX  = 48; // 40–55px range creates soft, 3D luminous glowing spheres
+const TOTAL = 52; // Raised to 45–60 range for richer, continuous screen-wide density
+const BLUR_PX = 48; // 40–55px range creates soft, 3D luminous glowing spheres
 const BLUR_PAD = 100;
 
 /* ─────────────── Factory ───────────────────────────────── */
@@ -108,13 +108,13 @@ export default function HeroPinballBubbles() {
     const s = S.current;
 
     const applySize = (W, H) => {
-      canvas.width  = W;
+      canvas.width = W;
       canvas.height = H;
       s.W = W;
       s.H = H;
 
       const off = document.createElement("canvas");
-      off.width  = W + BLUR_PAD * 2;
+      off.width = W + BLUR_PAD * 2;
       off.height = H + BLUR_PAD * 2;
       s.off = off;
 

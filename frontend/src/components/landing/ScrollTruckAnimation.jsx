@@ -124,12 +124,12 @@ function TruckSVG() {
       <rect x="211" y="43" width="6" height="5" rx="1" fill="#334155" />
 
       {/* ════ WHEELS ════ */}
-      <circle cx="42"  cy="90" r="9.5" fill="#0f172a" />
-      <circle cx="42"  cy="90" r="5.5" fill="#334155" />
-      <circle cx="42"  cy="90" r="2.5" fill="#94a3b8" />
-      <circle cx="86"  cy="90" r="9.5" fill="#0f172a" />
-      <circle cx="86"  cy="90" r="5.5" fill="#334155" />
-      <circle cx="86"  cy="90" r="2.5" fill="#94a3b8" />
+      <circle cx="42" cy="90" r="9.5" fill="#0f172a" />
+      <circle cx="42" cy="90" r="5.5" fill="#334155" />
+      <circle cx="42" cy="90" r="2.5" fill="#94a3b8" />
+      <circle cx="86" cy="90" r="9.5" fill="#0f172a" />
+      <circle cx="86" cy="90" r="5.5" fill="#334155" />
+      <circle cx="86" cy="90" r="2.5" fill="#94a3b8" />
       <circle cx="180" cy="90" r="9.5" fill="#0f172a" />
       <circle cx="180" cy="90" r="5.5" fill="#334155" />
       <circle cx="180" cy="90" r="2.5" fill="#94a3b8" />

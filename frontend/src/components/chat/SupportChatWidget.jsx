@@ -357,22 +357,20 @@ export default function SupportChatWidget({ isOpen, onClose }) {
                   )}
 
                   <div
-                    className={`max-w-[85%] rounded-2xl px-4 py-3 ${
-                      isUser
+                    className={`max-w-[85%] rounded-2xl px-4 py-3 ${isUser
                         ? "rounded-tr-sm bg-red-500 text-xs font-medium text-white shadow-sm sm:text-[13px]"
                         : msg.isError
-                        ? "rounded-tl-sm border border-amber-500/30 bg-amber-500/5"
-                        : "rounded-tl-sm border border-slate-200/90 bg-slate-50/90 shadow-sm dark:border-white/10 dark:bg-[#181818] dark:shadow-none"
-                    }`}
+                          ? "rounded-tl-sm border border-amber-500/30 bg-amber-500/5"
+                          : "rounded-tl-sm border border-slate-200/90 bg-slate-50/90 shadow-sm dark:border-white/10 dark:bg-[#181818] dark:shadow-none"
+                      }`}
                   >
                     <FormattedMessage content={msg.content} isUser={isUser} />
 
                     <span
-                      className={`mt-1.5 block text-[9px] ${
-                        isUser
+                      className={`mt-1.5 block text-[9px] ${isUser
                           ? "text-red-100"
                           : "text-slate-400 dark:text-slate-500"
-                      }`}
+                        }`}
                     >
                       {new Date(msg.timestamp).toLocaleTimeString([], {
                         hour: "2-digit",

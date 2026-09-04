@@ -509,7 +509,7 @@ function ContactItem({ title, value }) {
       </p>
 
       <p className="mt-1 text-sm font-semibold text-slate-900 dark:text-slate-200">
-         {value}
+        {value}
       </p>
     </div>
   );
