@@ -20,8 +20,17 @@ import AdminShipments from "./pages/AdminShipments";
 import AdminNetwork from "./pages/AdminNetwork";
 import AdminAnalytics from "./pages/AdminAnalytics";
 import ClientCreateShipment from "./pages/ClientCreateShipment";
+import ClientShipments from "./pages/client/ClientShipments";
 import ScanPackage from "./pages/warehouse/ScanPackage";
 import ReceivePackage from "./pages/warehouse/ReceivePackage";
+import WarehousePackages from "./pages/warehouse/WarehousePackages";
+import DistributorPackages from "./pages/distributor/DistributorPackages";
+import DistributorAssignPackage from "./pages/distributor/DistributorAssignPackage";
+import DistributorManageRoutes from "./pages/distributor/DistributorManageRoutes";
+import DistributorTrackShipment from "./pages/distributor/DistributorTrackShipment";
+import DistributorCreateDistribution from "./pages/distributor/DistributorCreateDistribution";
+import DeliveryList from "./pages/delivery/DeliveryList";
+import DeliveryScanPackage from "./pages/delivery/DeliveryScanPackage";
 import ScrollToTop from "./components/navigation/ScrollToTop";
 
 function App() {
@@ -66,6 +75,14 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/client/shipments"
+              element={
+                <ProtectedRoute allowedRoles={["client", "admin"]}>
+                  <ClientShipments />
+                </ProtectedRoute>
+              }
+            />
 
             {/* Protected Warehouse Routes */}
             <Route
@@ -100,6 +117,14 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/warehouse/packages"
+              element={
+                <ProtectedRoute allowedRoles={["warehouse", "admin"]}>
+                  <WarehousePackages />
+                </ProtectedRoute>
+              }
+            />
 
             {/* Protected Distributor Routes */}
             <Route
@@ -118,6 +143,54 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/distributor/packages"
+              element={
+                <ProtectedRoute allowedRoles={["distributor", "admin"]}>
+                  <DistributorPackages />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/distributor/assign"
+              element={
+                <ProtectedRoute allowedRoles={["distributor", "admin"]}>
+                  <DistributorAssignPackage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/distributor/routes"
+              element={
+                <ProtectedRoute allowedRoles={["distributor", "admin"]}>
+                  <DistributorManageRoutes />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/distributor/track"
+              element={
+                <ProtectedRoute allowedRoles={["distributor", "admin"]}>
+                  <DistributorTrackShipment />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/distributor/create"
+              element={
+                <ProtectedRoute allowedRoles={["distributor", "admin"]}>
+                  <DistributorCreateDistribution />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/distributor/create-distribution"
+              element={
+                <ProtectedRoute allowedRoles={["distributor", "admin"]}>
+                  <DistributorCreateDistribution />
+                </ProtectedRoute>
+              }
+            />
 
             {/* Protected Delivery Routes */}
             <Route
@@ -133,6 +206,22 @@ function App() {
               element={
                 <ProtectedRoute allowedRoles={["delivery", "admin"]}>
                   <DeliveryDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/delivery/deliveries"
+              element={
+                <ProtectedRoute allowedRoles={["delivery", "admin"]}>
+                  <DeliveryList />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/delivery/scan"
+              element={
+                <ProtectedRoute allowedRoles={["delivery", "admin"]}>
+                  <DeliveryScanPackage />
                 </ProtectedRoute>
               }
             />

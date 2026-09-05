@@ -1,9 +1,11 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 import Navbar from "../components/navigation/Navbar";
 import { useAuth } from "../context/AuthContext";
 
-const deliveries = [
+const INITIAL_DELIVERIES = [
   {
     id: "PKG-10294",
     customer: "Rahul Sharma",
@@ -36,11 +38,55 @@ const deliveries = [
 
 function DeliveryDashboard() {
   const { user } = useAuth();
+  const [deliveryList, setDeliveryList] = useState(() => {
+    const saved = localStorage.getItem("logitrack_agent_deliveries");
+    if (saved) {
+      try {
+        return JSON.parse(saved).slice(0, 4);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    return INITIAL_DELIVERIES;
+  });
+
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [selectedPkgId, setSelectedPkgId] = useState("PKG-10294");
+  const [targetStatus, setTargetStatus] = useState("DELIVERED");
+  const [deliveryNotes, setDeliveryNotes] = useState("");
+  const [showSupportModal, setShowSupportModal] = useState(false);
+
+  const handleUpdateStatus = (e) => {
+    e.preventDefault();
+    const updated = deliveryList.map((d) =>
+      d.id === selectedPkgId ? { ...d, status: targetStatus, time: "Just now" } : d
+    );
+    setDeliveryList(updated);
+
+    // Persist in local storage
+    const saved = localStorage.getItem("logitrack_agent_deliveries");
+    if (saved) {
+      try {
+        const all = JSON.parse(saved);
+        const updatedAll = all.map((d) =>
+          d.id === selectedPkgId ? { ...d, status: targetStatus, time: "Just now" } : d
+        );
+        localStorage.setItem("logitrack_agent_deliveries", JSON.stringify(updatedAll));
+      } catch (err) {
+        // ignore
+      }
+    }
+
+    toast.success(`Package ${selectedPkgId} updated to ${targetStatus}!`);
+    setShowUpdateModal(false);
+    setDeliveryNotes("");
+  };
+
   return (
     <div className="min-h-screen bg-[#050505] text-white">
 
       {/* ================= HEADER ================= */}
-      <Navbar />
+      <Navbar showLogout={true} />
 
 
       {/* ================= MAIN ================= */}
@@ -157,19 +203,19 @@ function DeliveryDashboard() {
 
                 </div>
 
-                <button
-                  type="button"
+                <Link
+                  to="/delivery/deliveries"
                   className="text-xs text-slate-500 transition hover:text-white"
                 >
                   View All →
-                </button>
+                </Link>
 
               </div>
 
 
               <div className="divide-y divide-white/10">
 
-                {deliveries.map((delivery, index) => (
+                {deliveryList.map((delivery, index) => (
 
                   <motion.div
                     key={delivery.id}
@@ -371,16 +417,31 @@ function DeliveryDashboard() {
               <ActionCard
                 title="Update Delivery"
                 text="Change the current shipment delivery status."
+                onClick={() => setShowUpdateModal(true)}
               />
 
-              <ActionCard
-                title="Scan Package"
-                text="Scan a package and update its location."
-              />
+              <Link to="/delivery/scan" className="block group">
+                <div className="border border-white/10 bg-[#090909] p-5 text-left transition group-hover:border-red-500/40 h-full">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="text-sm font-semibold text-white">
+                        Scan Package
+                      </h3>
+                      <p className="mt-2 text-xs leading-5 text-slate-500">
+                        Scan a package barcode and confirm drop.
+                      </p>
+                    </div>
+                    <span className="text-lg text-red-500 group-hover:translate-x-1 transition">
+                      →
+                    </span>
+                  </div>
+                </div>
+              </Link>
 
               <ActionCard
                 title="Contact Support"
-                text="Get assistance with delivery issues."
+                text="Emergency dispatch contact and incident reporting."
+                onClick={() => setShowSupportModal(true)}
               />
 
             </div>
@@ -418,6 +479,164 @@ function DeliveryDashboard() {
 
         </div>
 
+        {/* ================= UPDATE STATUS MODAL ================= */}
+        <AnimatePresence>
+          {showUpdateModal && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="w-full max-w-md border border-white/10 bg-[#090909] p-6 shadow-2xl relative"
+              >
+                <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                  <h3 className="text-lg font-bold text-white tracking-wide">
+                    UPDATE DELIVERY STATUS
+                  </h3>
+                  <button
+                    onClick={() => setShowUpdateModal(false)}
+                    className="h-8 w-8 rounded-full border border-white/10 text-slate-400 hover:text-white flex items-center justify-center text-sm"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                <form onSubmit={handleUpdateStatus} className="mt-6 space-y-4 text-sm">
+                  <div>
+                    <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">
+                      Select Shipment
+                    </label>
+                    <select
+                      value={selectedPkgId}
+                      onChange={(e) => setSelectedPkgId(e.target.value)}
+                      className="w-full border border-white/10 bg-[#090909] px-3.5 py-2.5 text-sm text-white focus:border-red-500 focus:outline-none"
+                    >
+                      {deliveryList.map((d) => (
+                        <option key={d.id} value={d.id}>
+                          {d.id} — {d.customer} ({d.destination})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">
+                      New Status
+                    </label>
+                    <select
+                      value={targetStatus}
+                      onChange={(e) => setTargetStatus(e.target.value)}
+                      className="w-full border border-white/10 bg-[#090909] px-3.5 py-2.5 text-sm text-white focus:border-red-500 focus:outline-none"
+                    >
+                      <option value="DELIVERED">DELIVERED (Handover Successful)</option>
+                      <option value="OUT FOR DELIVERY">OUT FOR DELIVERY</option>
+                      <option value="PICKED UP">PICKED UP (From Hub)</option>
+                      <option value="FAILED/ATTEMPTED">FAILED / ATTEMPTED (Customer Not Available)</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">
+                      Delivery Note
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Handed to customer at door"
+                      value={deliveryNotes}
+                      onChange={(e) => setDeliveryNotes(e.target.value)}
+                      className="w-full border border-white/10 bg-black/40 px-3.5 py-2 text-sm text-white placeholder-slate-600 focus:border-red-500 focus:outline-none"
+                    />
+                  </div>
+
+                  <div className="mt-6 flex justify-end gap-3 border-t border-white/10 pt-4">
+                    <button
+                      type="button"
+                      onClick={() => setShowUpdateModal(false)}
+                      className="px-4 py-2 border border-white/10 text-xs font-semibold uppercase text-slate-300 hover:text-white"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="px-5 py-2 bg-red-600 text-xs font-semibold uppercase text-white hover:bg-red-500 shadow-lg shadow-red-600/20"
+                    >
+                      Apply Status
+                    </button>
+                  </div>
+                </form>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
+
+        {/* ================= SUPPORT MODAL ================= */}
+        <AnimatePresence>
+          {showSupportModal && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="w-full max-w-md border border-white/10 bg-[#090909] p-6 shadow-2xl relative"
+              >
+                <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                  <h3 className="text-lg font-bold text-white tracking-wide">
+                    DISPATCH CONTROL SUPPORT
+                  </h3>
+                  <button
+                    onClick={() => setShowSupportModal(false)}
+                    className="h-8 w-8 rounded-full border border-white/10 text-slate-400 hover:text-white flex items-center justify-center text-sm"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                <div className="mt-6 space-y-4 text-sm">
+                  <div className="border border-white/5 bg-white/[0.02] p-4">
+                    <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider">
+                      Emergency Fleet Helpline
+                    </p>
+                    <p className="text-lg font-mono font-bold text-red-500 mt-1">
+                      1800-419-LOGI (Toll Free)
+                    </p>
+                    <p className="text-xs text-slate-500 mt-1">
+                      Priority channel for breakdown, route blockage, or immediate customer disputes.
+                    </p>
+                  </div>
+
+                  <div className="border border-white/5 bg-white/[0.02] p-4">
+                    <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider">
+                      Regional Dispatch Hub
+                    </p>
+                    <p className="text-sm font-semibold text-white mt-1">
+                      Western Logistics Command, Bay 4
+                    </p>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      Operating Controller: Capt. Rajesh V. (+91 98200 12099)
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-6 flex justify-end gap-3 border-t border-white/10 pt-4">
+                  <button
+                    type="button"
+                    onClick={() => setShowSupportModal(false)}
+                    className="px-4 py-2 border border-white/10 text-xs font-semibold uppercase text-slate-300 hover:text-white"
+                  >
+                    Dismiss
+                  </button>
+                  <a
+                    href="tel:18004195644"
+                    onClick={() => toast.info("Dialing emergency dispatch line...")}
+                    className="px-4 py-2 bg-red-600 text-xs font-semibold uppercase text-white hover:bg-red-500 text-center"
+                  >
+                    Call Dispatch
+                  </a>
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
       </main>
 
     </div>
@@ -496,11 +715,12 @@ function RoutePoint({ number, place, detail }) {
 
 /* ================= ACTION CARD ================= */
 
-function ActionCard({ title, text }) {
+function ActionCard({ title, text, onClick }) {
   return (
     <motion.button
       whileHover={{ y: -3 }}
       type="button"
+      onClick={onClick}
       className="
         border
         border-white/10
@@ -509,29 +729,22 @@ function ActionCard({ title, text }) {
         text-left
         transition
         hover:border-red-500/40
+        w-full
       "
     >
-
       <div className="flex items-center justify-between">
-
         <div>
-
           <h3 className="text-sm font-semibold">
             {title}
           </h3>
-
           <p className="mt-2 text-xs leading-5 text-slate-500">
             {text}
           </p>
-
         </div>
-
         <span className="text-lg text-red-500">
           →
         </span>
-
       </div>
-
     </motion.button>
   );
 }

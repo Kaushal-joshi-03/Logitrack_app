@@ -157,12 +157,12 @@ function AdminDashboard() {
 
                 </div>
 
-                <button
-                  type="button"
+                <Link
+                  to="/admin/shipments"
                   className="text-xs text-slate-500 transition hover:text-white"
                 >
                   View All →
-                </button>
+                </Link>
 
               </div>
 

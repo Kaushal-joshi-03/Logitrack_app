@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import Navbar from "../components/navigation/Navbar";
 import { useAuth } from "../context/AuthContext";
 
@@ -39,7 +40,7 @@ function DistributorDashboard() {
     <div className="min-h-screen bg-[#050505] text-white">
 
       {/* ================= HEADER ================= */}
-      <Navbar />
+      <Navbar showLogout={true} />
 
 
       {/* ================= MAIN ================= */}
@@ -68,9 +69,12 @@ function DistributorDashboard() {
               </p>
             </div>
 
-            <button className="w-fit bg-red-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-red-600">
+            <Link
+              to="/distributor/create"
+              className="w-fit bg-red-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-red-600 inline-block text-center"
+            >
               + Create Distribution
-            </button>
+            </Link>
 
           </div>
         </motion.div>
@@ -125,9 +129,12 @@ function DistributorDashboard() {
                 </p>
               </div>
 
-              <button className="text-xs text-red-500 hover:text-red-400">
+              <Link
+                to="/distributor/packages"
+                className="text-xs text-red-500 hover:text-red-400 transition"
+              >
                 View All →
-              </button>
+              </Link>
 
             </div>
 
@@ -312,16 +319,19 @@ function DistributorDashboard() {
             <QuickAction
               title="Assign Package"
               text="Assign shipments to a distribution route."
+              to="/distributor/assign"
             />
 
             <QuickAction
               title="Manage Routes"
               text="View and manage your active delivery routes."
+              to="/distributor/routes"
             />
 
             <QuickAction
               title="Track Shipments"
               text="Monitor packages currently in transit."
+              to="/distributor/track"
             />
 
           </div>
@@ -389,30 +399,30 @@ function RoutePoint({ city, type, active }) {
 }
 
 
-function QuickAction({ title, text }) {
+function QuickAction({ title, text, to }) {
   return (
-    <motion.button
-      whileHover={{ y: -3 }}
-      className="border border-white/10 bg-[#090909] p-5 text-left transition hover:border-red-500/40"
-    >
+    <Link to={to} className="block group">
+      <motion.div
+        whileHover={{ y: -3 }}
+        className="border border-white/10 bg-[#090909] p-5 text-left transition group-hover:border-red-500/40 h-full"
+      >
+        <div className="mb-4 flex h-9 w-9 items-center justify-center border border-red-500/30 text-red-500 group-hover:bg-red-500/10 transition">
+          ◇
+        </div>
 
-      <div className="mb-4 flex h-9 w-9 items-center justify-center border border-red-500/30 text-red-500">
-        ◇
-      </div>
+        <h3 className="font-semibold text-white">
+          {title}
+        </h3>
 
-      <h3 className="font-semibold">
-        {title}
-      </h3>
+        <p className="mt-2 text-xs leading-5 text-slate-500">
+          {text}
+        </p>
 
-      <p className="mt-2 text-xs leading-5 text-slate-500">
-        {text}
-      </p>
-
-      <p className="mt-4 text-xs text-red-500">
-        Open →
-      </p>
-
-    </motion.button>
+        <p className="mt-4 text-xs text-red-500 font-medium group-hover:translate-x-1 transition inline-block">
+          Open →
+        </p>
+      </motion.div>
+    </Link>
   );
 }
 

@@ -62,13 +62,22 @@ export function AuthProvider({ children }) {
     const existingRegistered = registeredUsers[cleanEmail];
     const selectedNormalizedRole = normalizeRole(role);
 
+    // Client-side role pre-check if user is in local registered map
+    if (existingRegistered && existingRegistered.role && normalizeRole(existingRegistered.role) !== selectedNormalizedRole) {
+      const formattedRole = String(role).charAt(0).toUpperCase() + String(role).slice(1);
+      return {
+        success: false,
+        message: `These credentials are not registered under the ${formattedRole} role. Please select the correct role or check your credentials.`,
+      };
+    }
+
     try {
       const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email: cleanEmail, password }),
+        body: JSON.stringify({ email: cleanEmail, password, role: selectedNormalizedRole }),
       });
 
       const data = await response.json();
@@ -78,6 +87,15 @@ export function AuthProvider({ children }) {
         const returnedToken = data.token || data.data?.token;
         const userName = returnedUser.name || existingRegistered?.name || "User";
         const userRole = normalizeRole(returnedUser.role || selectedNormalizedRole || existingRegistered?.role);
+
+        // Verify that returned user role matches selected role
+        if (selectedNormalizedRole && userRole !== selectedNormalizedRole) {
+          const formattedRole = String(role).charAt(0).toUpperCase() + String(role).slice(1);
+          return {
+            success: false,
+            message: `These credentials are not registered under the ${formattedRole} role. Please select the correct role or check your credentials.`,
+          };
+        }
 
         const userData = {
           id: returnedUser.id || returnedUser._id || "user-" + Date.now(),

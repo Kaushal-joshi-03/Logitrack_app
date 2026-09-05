@@ -98,7 +98,7 @@ exports.register = async (req, res) => {
 // @access  Public
 exports.login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
 
     // Check for email and password
     if (!email || !password) {
@@ -126,6 +126,19 @@ exports.login = async (req, res) => {
         success: false,
         message: 'Invalid email or password'
       });
+    }
+
+    // Verify role match if role was specified
+    if (role) {
+      const selectedRoleNorm = normalizeRole(role);
+      const userRoleNorm = normalizeRole(user.role);
+      if (selectedRoleNorm !== userRoleNorm) {
+        const formattedRole = String(role).charAt(0).toUpperCase() + String(role).slice(1);
+        return res.status(403).json({
+          success: false,
+          message: `These credentials are not registered under the ${formattedRole} role. Please select the correct role or check your credentials.`
+        });
+      }
     }
 
     // Generate token

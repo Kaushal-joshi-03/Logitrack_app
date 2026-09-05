@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 import Navbar from "../components/navigation/Navbar";
 
 const shipments = [
@@ -38,6 +39,28 @@ const shipments = [
 ];
 
 function AdminShipments() {
+  const handleExportCSV = () => {
+    const headers = ["Shipment ID", "Client", "Origin", "Destination", "Status", "Progress"];
+    const rows = shipments.map((s) => [
+      s.id,
+      `"${s.client}"`,
+      `"${s.origin}"`,
+      `"${s.destination}"`,
+      `"${s.status}"`,
+      `"${s.progress}"`,
+    ]);
+    const csvContent =
+      "data:text/csv;charset=utf-8," +
+      [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `logitrack_shipments_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    toast.success("Shipments report exported as CSV");
+  };
   return (
     <div className="min-h-screen bg-[#050505] text-white">
 
@@ -150,6 +173,7 @@ function AdminShipments() {
 
               <button
                 type="button"
+                onClick={handleExportCSV}
                 className="
                   border
                   border-white/10
@@ -162,7 +186,7 @@ function AdminShipments() {
                   hover:text-white
                 "
               >
-                Export
+                Export CSV
               </button>
 
             </div>

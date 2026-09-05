@@ -1,8 +1,10 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 import Navbar from "../components/navigation/Navbar";
 
-const network = [
+const INITIAL_NETWORK = [
   {
     name: "Delhi Central Warehouse",
     location: "Delhi",
@@ -59,6 +61,58 @@ const agents = [
 ];
 
 function AdminNetwork() {
+  const [networkList, setNetworkList] = useState(() => {
+    const saved = localStorage.getItem("logitrack_admin_network");
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (err) {
+        console.error("Failed to parse saved network locations", err);
+      }
+    }
+    return INITIAL_NETWORK;
+  });
+
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newLocation, setNewLocation] = useState({
+    name: "",
+    location: "",
+    type: "WAREHOUSE",
+    capacity: "75%",
+    shipments: 20,
+    status: "OPERATIONAL",
+  });
+
+  const handleAddLocation = (e) => {
+    e.preventDefault();
+    if (!newLocation.name.trim() || !newLocation.location.trim()) {
+      toast.error("Please enter both facility name and city.");
+      return;
+    }
+    const updated = [
+      {
+        ...newLocation,
+        name: newLocation.name.trim(),
+        location: newLocation.location.trim(),
+        shipments: Number(newLocation.shipments) || 0,
+        capacity: newLocation.capacity.endsWith("%") ? newLocation.capacity : `${newLocation.capacity}%`,
+      },
+      ...networkList,
+    ];
+    setNetworkList(updated);
+    localStorage.setItem("logitrack_admin_network", JSON.stringify(updated));
+    toast.success(`Added ${newLocation.name} to logistics network`);
+    setShowAddModal(false);
+    setNewLocation({
+      name: "",
+      location: "",
+      type: "WAREHOUSE",
+      capacity: "75%",
+      shipments: 20,
+      status: "OPERATIONAL",
+    });
+  };
+
   return (
     <div className="min-h-screen bg-[#050505] text-white">
 
@@ -175,6 +229,7 @@ function AdminNetwork() {
 
               <button
                 type="button"
+                onClick={() => setShowAddModal(true)}
                 className="
                   border
                   border-white/10
@@ -195,7 +250,7 @@ function AdminNetwork() {
 
             <div className="grid gap-4 p-6 md:grid-cols-2">
 
-              {network.map((item, index) => (
+              {networkList.map((item, index) => (
 
                 <motion.div
                   key={item.name}
@@ -441,6 +496,128 @@ function AdminNetwork() {
 
         </div>
 
+        {/* ================= ADD LOCATION MODAL ================= */}
+        <AnimatePresence>
+          {showAddModal && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                className="w-full max-w-lg border border-white/10 bg-[#090909] p-6 shadow-2xl relative"
+              >
+                <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                  <div>
+                    <h2 className="text-lg font-bold text-white tracking-wide">
+                      ADD NETWORK LOCATION
+                    </h2>
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      Register a new warehouse facility or distribution hub
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setShowAddModal(false)}
+                    className="h-8 w-8 rounded-full border border-white/10 text-slate-400 hover:text-white hover:border-white/30 flex items-center justify-center text-sm transition"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                <form onSubmit={handleAddLocation} className="mt-6 space-y-4 text-sm">
+                  <div>
+                    <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">
+                      Facility Name *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. Pune Central Distribution Center"
+                      value={newLocation.name}
+                      onChange={(e) => setNewLocation({ ...newLocation, name: e.target.value })}
+                      className="w-full border border-white/10 bg-black/50 px-3.5 py-2.5 text-sm text-white placeholder-slate-600 focus:border-red-500 focus:outline-none transition"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">
+                        City / Location *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. Pune"
+                        value={newLocation.location}
+                        onChange={(e) => setNewLocation({ ...newLocation, location: e.target.value })}
+                        className="w-full border border-white/10 bg-black/50 px-3.5 py-2.5 text-sm text-white placeholder-slate-600 focus:border-red-500 focus:outline-none transition"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">
+                        Facility Type
+                      </label>
+                      <select
+                        value={newLocation.type}
+                        onChange={(e) => setNewLocation({ ...newLocation, type: e.target.value })}
+                        className="w-full border border-white/10 bg-[#090909] px-3.5 py-2.5 text-sm text-white focus:border-red-500 focus:outline-none transition"
+                      >
+                        <option value="WAREHOUSE">WAREHOUSE</option>
+                        <option value="DISTRIBUTOR">DISTRIBUTOR</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">
+                        Capacity
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="e.g. 75%"
+                        value={newLocation.capacity}
+                        onChange={(e) => setNewLocation({ ...newLocation, capacity: e.target.value })}
+                        className="w-full border border-white/10 bg-black/50 px-3.5 py-2.5 text-sm text-white placeholder-slate-600 focus:border-red-500 focus:outline-none transition"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">
+                        Active Shipments
+                      </label>
+                      <input
+                        type="number"
+                        min="0"
+                        placeholder="e.g. 24"
+                        value={newLocation.shipments}
+                        onChange={(e) => setNewLocation({ ...newLocation, shipments: e.target.value })}
+                        className="w-full border border-white/10 bg-black/50 px-3.5 py-2.5 text-sm text-white placeholder-slate-600 focus:border-red-500 focus:outline-none transition"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="mt-6 flex justify-end gap-3 border-t border-white/10 pt-4">
+                    <button
+                      type="button"
+                      onClick={() => setShowAddModal(false)}
+                      className="px-4 py-2 border border-white/10 text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white hover:border-white/30 transition"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="px-5 py-2 bg-red-600 text-xs font-semibold uppercase tracking-wider text-white hover:bg-red-500 transition shadow-lg shadow-red-600/20"
+                    >
+                      Add Location
+                    </button>
+                  </div>
+                </form>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
       </main>
 
     </div>

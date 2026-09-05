@@ -1,10 +1,12 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import Navbar from "../../components/navigation/Navbar";
 import { useAuth } from "../../context/AuthContext";
 
 function ClientDashboard() {
   const { user } = useAuth();
+  const [showAccountModal, setShowAccountModal] = useState(false);
   const stats = [
     {
       title: "TOTAL SHIPMENTS",
@@ -256,12 +258,12 @@ function ClientDashboard() {
 
                 </div>
 
-                <button
-                  type="button"
+                <Link
+                  to="/client/shipments"
                   className="text-xs text-slate-500 transition hover:text-white"
                 >
                   View All →
-                </button>
+                </Link>
 
               </div>
 
@@ -378,10 +380,11 @@ function ClientDashboard() {
               <div className="space-y-3 p-5">
 
                 {/* CREATE SHIPMENT */}
-                <button
-                  type="button"
+                <Link
+                  to="/client/create-shipment"
                   className="
                     group
+                    block
                     w-full
                     border
                     border-white/10
@@ -393,29 +396,20 @@ function ClientDashboard() {
                     hover:bg-red-500/[0.04]
                   "
                 >
-
                   <div className="flex items-center justify-between">
-
                     <div>
-
                       <p className="text-sm font-semibold">
                         Create Shipment
                       </p>
-
                       <p className="mt-1 text-xs text-slate-600">
                         Register a new shipment
                       </p>
-
                     </div>
-
                     <span className="text-lg text-red-500 transition group-hover:translate-x-1">
                       →
                     </span>
-
                   </div>
-
-                </button>
-
+                </Link>
 
                 {/* TRACK SHIPMENT */}
                 <Link
@@ -432,70 +426,53 @@ function ClientDashboard() {
                     hover:bg-red-500/[0.04]
                   "
                 >
-
                   <div className="flex items-center justify-between">
-
                     <div>
-
                       <p className="text-sm font-semibold">
                         Track Shipment
                       </p>
-
                       <p className="mt-1 text-xs text-slate-600">
                         Check real-time shipment status
                       </p>
-
                     </div>
-
                     <span className="text-lg text-red-500 transition group-hover:translate-x-1">
                       →
                     </span>
-
                   </div>
-
                 </Link>
 
-
                 {/* ACCOUNT */}
-                <Link
-                  to="/client/create-shipment"
+                <button
+                  type="button"
+                  onClick={() => setShowAccountModal(true)}
                   className="
-    group
-    block
-    w-full
-    border
-    border-white/10
-    bg-white/[0.02]
-    p-5
-    text-left
-    transition
-    hover:border-red-500/40
-    hover:bg-red-500/[0.04]
-  "
+                    group
+                    block
+                    w-full
+                    border
+                    border-white/10
+                    bg-white/[0.02]
+                    p-5
+                    text-left
+                    transition
+                    hover:border-red-500/40
+                    hover:bg-red-500/[0.04]
+                  "
                 >
-
                   <div className="flex items-center justify-between">
-
                     <div>
-
                       <p className="text-sm font-semibold">
                         Account Settings
                       </p>
-
                       <p className="mt-1 text-xs text-slate-600">
-                        Manage your account
+                        Manage your account & details
                       </p>
-
                     </div>
-
                     <span className="text-lg text-red-500 transition group-hover:translate-x-1">
                       →
                     </span>
-
                   </div>
-
-                </Link>
-
+                </button>
               </div>
 
 
@@ -532,6 +509,117 @@ function ClientDashboard() {
 
         </div>
 
+        {/* ACCOUNT DETAILS MODAL */}
+        <AnimatePresence>
+          {showAccountModal && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                className="w-full max-w-lg border border-white/10 bg-[#090909] p-6 shadow-2xl relative"
+              >
+                <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                  <div>
+                    <h2 className="text-lg font-bold text-white tracking-wide">
+                      ACCOUNT SETTINGS & DETAILS
+                    </h2>
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      Client organization credentials and active status
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setShowAccountModal(false)}
+                    className="h-8 w-8 rounded-full border border-white/10 text-slate-400 hover:text-white hover:border-white/30 flex items-center justify-center text-sm transition"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                <div className="mt-6 space-y-4 text-sm">
+                  <div className="flex items-center gap-4 p-4 border border-white/5 bg-white/[0.02]">
+                    <div className="h-12 w-12 rounded-full bg-red-600/10 border border-red-500/30 flex items-center justify-center text-red-500 font-bold text-lg">
+                      {(user?.name || user?.email || "C")[0].toUpperCase()}
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-white">
+                        {user?.name || "Corporate Client"}
+                      </h3>
+                      <p className="text-xs text-slate-400">
+                        {user?.email || "client@logitrack.io"}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3 text-xs">
+                    <div className="border border-white/5 bg-white/[0.02] p-3">
+                      <span className="text-slate-500 uppercase tracking-wider block text-[10px]">
+                        Account Role
+                      </span>
+                      <span className="font-mono text-white font-medium mt-1 inline-block">
+                        {user?.role || "CLIENT"}
+                      </span>
+                    </div>
+
+                    <div className="border border-white/5 bg-white/[0.02] p-3">
+                      <span className="text-slate-500 uppercase tracking-wider block text-[10px]">
+                        Account Status
+                      </span>
+                      <span className="text-emerald-400 font-medium mt-1 inline-flex items-center gap-1.5">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+                        Active & Verified
+                      </span>
+                    </div>
+
+                    <div className="border border-white/5 bg-white/[0.02] p-3">
+                      <span className="text-slate-500 uppercase tracking-wider block text-[10px]">
+                        Client ID
+                      </span>
+                      <span className="font-mono text-slate-300 font-medium mt-1 inline-block">
+                        {user?.id ? `CLI-${String(user.id).slice(-4)}` : "CLI-8829"}
+                      </span>
+                    </div>
+
+                    <div className="border border-white/5 bg-white/[0.02] p-3">
+                      <span className="text-slate-500 uppercase tracking-wider block text-[10px]">
+                        Logistics Tier
+                      </span>
+                      <span className="text-amber-400 font-medium mt-1 inline-block">
+                        Enterprise Priority
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="border border-white/5 bg-white/[0.02] p-3 text-xs">
+                    <span className="text-slate-500 uppercase tracking-wider block text-[10px]">
+                      Access Permissions
+                    </span>
+                    <p className="text-slate-300 mt-1">
+                      Full shipment dispatch, live telemetry tracking, and digital proof-of-delivery receipts.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-6 flex justify-end gap-3 border-t border-white/10 pt-4">
+                  <button
+                    type="button"
+                    onClick={() => setShowAccountModal(false)}
+                    className="px-4 py-2 border border-white/10 text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white hover:border-white/30 transition"
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowAccountModal(false)}
+                    className="px-4 py-2 bg-red-600 text-xs font-semibold uppercase tracking-wider text-white hover:bg-red-500 transition"
+                  >
+                    Save Changes
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
       </main>
 
     </div>

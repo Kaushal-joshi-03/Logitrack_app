@@ -1,10 +1,88 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 import Navbar from "../../components/navigation/Navbar";
 import { useAuth } from "../../context/AuthContext";
 
 function WarehouseDashboard() {
   const { user } = useAuth();
+  const [dispatchModalOpen, setDispatchModalOpen] = useState(false);
+  const [dispatchPackageId, setDispatchPackageId] = useState("");
+  const [selectedPkgId, setSelectedPkgId] = useState("PKG-10294");
+
+  const [recentPackages, setRecentPackages] = useState(() => {
+    const saved = localStorage.getItem("logitrack_warehouse_packages");
+    if (saved) {
+      try {
+        return JSON.parse(saved).slice(0, 4);
+      } catch (e) {
+        console.error("Failed to parse warehouse packages", e);
+      }
+    }
+    return [
+      {
+        id: "PKG-10294",
+        origin: "Delhi",
+        destination: "Mumbai",
+        status: "Ready",
+        date: "27 Aug 2026",
+      },
+      {
+        id: "PKG-10291",
+        origin: "Ahmedabad",
+        destination: "Jaipur",
+        status: "Stored",
+        date: "27 Aug 2026",
+      },
+      {
+        id: "PKG-10287",
+        origin: "Delhi",
+        destination: "Ahmedabad",
+        status: "Dispatched",
+        date: "26 Aug 2026",
+      },
+      {
+        id: "PKG-10281",
+        origin: "Mumbai",
+        destination: "Delhi",
+        status: "Stored",
+        date: "26 Aug 2026",
+      },
+    ];
+  });
+
+  const handleDispatch = (pkgIdToDispatch) => {
+    const targetId = pkgIdToDispatch || dispatchPackageId || selectedPkgId;
+    if (!targetId.trim()) {
+      toast.error("Please select or enter a package ID.");
+      return;
+    }
+    const cleanId = targetId.trim().toUpperCase();
+    const updated = recentPackages.map((p) =>
+      p.id.toUpperCase() === cleanId ? { ...p, status: "Dispatched" } : p
+    );
+    setRecentPackages(updated);
+
+    // Also update logitrack_warehouse_packages if exists
+    const saved = localStorage.getItem("logitrack_warehouse_packages");
+    if (saved) {
+      try {
+        const all = JSON.parse(saved);
+        const updatedAll = all.map((p) =>
+          p.id.toUpperCase() === cleanId ? { ...p, status: "DISPATCHED" } : p
+        );
+        localStorage.setItem("logitrack_warehouse_packages", JSON.stringify(updatedAll));
+      } catch (e) {
+        // ignore
+      }
+    }
+
+    toast.success(`Package ${cleanId} dispatched for transit!`);
+    setDispatchModalOpen(false);
+    setDispatchPackageId("");
+  };
+
   const stats = [
     {
       title: "TOTAL PACKAGES",
@@ -25,37 +103,6 @@ function WarehouseDashboard() {
       title: "DISPATCHED",
       value: "214",
       subtitle: "Sent to distributor",
-    },
-  ];
-
-  const packages = [
-    {
-      id: "PKG-10294",
-      origin: "Delhi",
-      destination: "Mumbai",
-      status: "Ready",
-      date: "27 Aug 2026",
-    },
-    {
-      id: "PKG-10291",
-      origin: "Ahmedabad",
-      destination: "Jaipur",
-      status: "Stored",
-      date: "27 Aug 2026",
-    },
-    {
-      id: "PKG-10287",
-      origin: "Delhi",
-      destination: "Ahmedabad",
-      status: "Dispatched",
-      date: "26 Aug 2026",
-    },
-    {
-      id: "PKG-10281",
-      origin: "Mumbai",
-      destination: "Delhi",
-      status: "Stored",
-      date: "26 Aug 2026",
     },
   ];
 
@@ -235,12 +282,12 @@ function WarehouseDashboard() {
 
                 </div>
 
-                <button
-                  type="button"
-                  className="text-xs text-slate-500 hover:text-white"
+                <Link
+                  to="/warehouse/packages"
+                  className="text-xs text-slate-500 transition hover:text-white"
                 >
                   View All →
-                </button>
+                </Link>
 
               </div>
 
@@ -280,7 +327,7 @@ function WarehouseDashboard() {
 
                   <tbody>
 
-                    {packages.map((pkg) => (
+                    {recentPackages.map((pkg, index) => (
 
                       <tr
                         key={pkg.id}
@@ -403,11 +450,12 @@ function WarehouseDashboard() {
 
                 </Link>
 
-
-                <button
-                  type="button"
+                {/* SCAN PACKAGE */}
+                <Link
+                  to="/warehouse/scan"
                   className="
                     group
+                    block
                     w-full
                     border
                     border-white/10
@@ -416,58 +464,28 @@ function WarehouseDashboard() {
                     text-left
                     transition
                     hover:border-red-500/40
+                    hover:bg-red-500/[0.04]
                   "
                 >
-
                   <div className="flex items-center justify-between">
-
-
-
-                    <Link
-                      to="/warehouse/receive"
-                      className="
-    group
-    block
-    w-full
-    border
-    border-white/10
-    bg-white/[0.02]
-    p-5
-    text-left
-    transition
-    hover:border-red-500/40
-  "
-                    >
-
-
-
-
-                      <div>
-
-                        <p className="text-sm font-semibold">
-                          Scan Package
-                        </p>
-
-                        <p className="mt-1 text-xs text-slate-600">
-                          Scan package barcode
-                        </p>
-
-                      </div>
-                    </Link>
-
-
-
-                    <span className="text-lg text-red-500">
+                    <div>
+                      <p className="text-sm font-semibold">
+                        Scan Package
+                      </p>
+                      <p className="mt-1 text-xs text-slate-600">
+                        Scan package barcode
+                      </p>
+                    </div>
+                    <span className="text-lg text-red-500 transition group-hover:translate-x-1">
                       →
                     </span>
-
                   </div>
+                </Link>
 
-                </button>
-
-
+                {/* DISPATCH PACKAGE */}
                 <button
                   type="button"
+                  onClick={() => setDispatchModalOpen(true)}
                   className="
                     group
                     w-full
@@ -478,29 +496,22 @@ function WarehouseDashboard() {
                     text-left
                     transition
                     hover:border-red-500/40
+                    hover:bg-red-500/[0.04]
                   "
                 >
-
                   <div className="flex items-center justify-between">
-
                     <div>
-
                       <p className="text-sm font-semibold">
                         Dispatch Package
                       </p>
-
                       <p className="mt-1 text-xs text-slate-600">
                         Send package to distributor
                       </p>
-
                     </div>
-
-                    <span className="text-lg text-red-500">
+                    <span className="text-lg text-red-500 transition group-hover:translate-x-1">
                       →
                     </span>
-
                   </div>
-
                 </button>
 
               </div>
@@ -539,6 +550,93 @@ function WarehouseDashboard() {
 
         </div>
 
+        {/* ================= DISPATCH PACKAGE MODAL ================= */}
+        <AnimatePresence>
+          {dispatchModalOpen && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="w-full max-w-lg border border-white/10 bg-[#090909] p-6 shadow-2xl relative"
+              >
+                <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                  <div>
+                    <span className="text-[10px] font-bold tracking-[0.2em] text-red-500">
+                      WAREHOUSE OUTBOUND
+                    </span>
+                    <h2 className="text-lg font-bold text-white tracking-wide mt-0.5">
+                      Dispatch Package
+                    </h2>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setDispatchModalOpen(false)}
+                    className="h-8 w-8 rounded-full border border-white/10 text-slate-400 hover:text-white flex items-center justify-center text-sm"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                <div className="mt-6 space-y-4 text-sm">
+                  <div>
+                    <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">
+                      Select Ready Package
+                    </label>
+                    <select
+                      value={selectedPkgId}
+                      onChange={(e) => {
+                        setSelectedPkgId(e.target.value);
+                        setDispatchPackageId(e.target.value);
+                      }}
+                      className="w-full border border-white/10 bg-[#090909] px-3.5 py-2.5 text-sm text-white focus:border-red-500 focus:outline-none"
+                    >
+                      {recentPackages.map((p) => (
+                        <option key={p.id} value={p.id}>
+                          {p.id} ({p.origin} → {p.destination}) - [{p.status}]
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">
+                      Or Enter Package ID Manually
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. PKG-10294"
+                      value={dispatchPackageId}
+                      onChange={(e) => setDispatchPackageId(e.target.value)}
+                      className="w-full border border-white/10 bg-black/50 px-3.5 py-2.5 text-sm text-white placeholder-slate-600 focus:border-red-500 focus:outline-none"
+                    />
+                  </div>
+
+                  <div className="border border-white/5 bg-white/[0.02] p-3 text-xs text-slate-400">
+                    Dispatching marks this package as leaving the warehouse and triggers the notification to the regional distributor hub for transit intake.
+                  </div>
+                </div>
+
+                <div className="mt-6 flex justify-end gap-3 border-t border-white/10 pt-4">
+                  <button
+                    type="button"
+                    onClick={() => setDispatchModalOpen(false)}
+                    className="px-4 py-2 border border-white/10 text-xs font-semibold uppercase text-slate-300 hover:text-white"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDispatch()}
+                    className="px-5 py-2 bg-red-600 text-xs font-semibold uppercase text-white hover:bg-red-500 shadow-lg shadow-red-600/20"
+                  >
+                    Confirm & Dispatch
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
       </main>
 
     </div>

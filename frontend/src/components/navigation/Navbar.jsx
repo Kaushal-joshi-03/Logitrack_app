@@ -213,8 +213,8 @@ function Navbar({ onLoginClick }) {
             </motion.button>
           )}
 
-          {/* If authenticated and not on public Home page: Show user info and red/orange Logout button */}
-          {isAuthenticated && location.pathname !== "/" && (
+          {/* If authenticated: Always show user info and Logout button */}
+          {isAuthenticated && (
             <>
               <div className="hidden text-right sm:block">
                 <p className="text-[10px] text-slate-500">LOGGED IN AS</p>
@@ -302,6 +302,33 @@ function Navbar({ onLoginClick }) {
               </Link>
             );
           })}
+
+          <div className="mt-3 pt-3 border-t border-white/10 flex items-center justify-between">
+            {isAuthenticated ? (
+              <div className="w-full flex items-center justify-between">
+                <span className="text-xs text-slate-400 font-medium truncate mr-2">
+                  {user?.name || user?.role?.toUpperCase()}
+                </span>
+                <button
+                  onClick={handleLogout}
+                  className="rounded bg-[#ff2438] px-4 py-2 text-xs font-bold text-white shadow-sm hover:bg-red-600 transition"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => {
+                  setMobileOpen(false);
+                  if (onLoginClick) onLoginClick();
+                  else navigate("/login");
+                }}
+                className="w-full rounded bg-slate-800 hover:bg-[#ff2438] text-white py-2 text-xs font-bold transition"
+              >
+                Log In
+              </button>
+            )}
+          </div>
         </nav>
       )}
 
