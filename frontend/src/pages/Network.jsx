@@ -35,7 +35,7 @@ function Network() {
             </motion.div>
 
             {/* Network */}
-            <div className="relative mt-16 h-[400px] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-white/10 dark:bg-[#090909] dark:shadow-none">
+            <div className="relative mt-16 h-[460px] sm:h-[440px] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-white/10 dark:bg-[#090909] dark:shadow-none">
 
               {/* Grid */}
               <div
@@ -61,11 +61,14 @@ function Network() {
                 className="
                   absolute
                   left-1/2
-                  top-1/2
+                  top-[44%]
+                  sm:top-[48%]
                   z-20
                   flex
-                  h-28
-                  w-28
+                  h-20
+                  w-20
+                  sm:h-28
+                  sm:w-28
                   -translate-x-1/2
                   -translate-y-1/2
                   items-center
@@ -74,83 +77,99 @@ function Network() {
                   border
                   border-red-500/40
                   bg-red-500/10
-                  shadow-[0_0_60px_rgba(239,29,47,0.2)]
+                  shadow-[0_0_40px_rgba(239,29,47,0.18)]
+                  sm:shadow-[0_0_60px_rgba(239,29,47,0.2)]
                 "
               >
-                <div className="h-4 w-4 rounded-full bg-red-500" />
+                <div className="relative flex items-center justify-center">
+                  <span className="absolute h-3 w-3 sm:h-4 sm:w-4 rounded-full bg-red-500 animate-sonar-ripple pointer-events-none" />
+                  <span className="relative h-3 w-3 sm:h-4 sm:w-4 rounded-full bg-red-500 animate-heartbeat-pulse" />
+                </div>
               </motion.div>
 
-              {/* Lines */}
-              <div className="absolute left-[35%] top-[38%] h-px w-[180px] rotate-[20deg] bg-red-500/40" />
+              {/* Lines - Mobile (SVG Radial Spoke Network) */}
+              <svg className="absolute inset-0 h-full w-full pointer-events-none sm:hidden" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <line x1="50" y1="44" x2="50" y2="12" stroke="rgba(239, 68, 68, 0.35)" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+                <line x1="50" y1="44" x2="18" y2="34" stroke="rgba(239, 68, 68, 0.35)" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+                <line x1="50" y1="44" x2="82" y2="34" stroke="rgba(239, 68, 68, 0.35)" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+                <line x1="50" y1="44" x2="22" y2="60" stroke="rgba(239, 68, 68, 0.35)" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+                <line x1="50" y1="44" x2="78" y2="60" stroke="rgba(239, 68, 68, 0.35)" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+              </svg>
 
-              <div className="absolute left-[34%] top-[55%] h-px w-[180px] rotate-[-20deg] bg-red-500/40" />
-
-              <div className="absolute left-[53%] top-[42%] h-px w-[180px] rotate-[-20deg] bg-red-500/40" />
-
-              <div className="absolute left-[53%] top-[58%] h-px w-[180px] rotate-[20deg] bg-red-500/40" />
+              {/* Lines - Desktop (SVG Radial Spoke Network) */}
+              <svg className="absolute inset-0 h-full w-full pointer-events-none hidden sm:block" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <line x1="50" y1="48" x2="50" y2="17" stroke="rgba(239, 68, 68, 0.35)" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+                <line x1="50" y1="48" x2="22" y2="38" stroke="rgba(239, 68, 68, 0.35)" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+                <line x1="50" y1="48" x2="78" y2="38" stroke="rgba(239, 68, 68, 0.35)" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+                <line x1="50" y1="48" x2="26" y2="69" stroke="rgba(239, 68, 68, 0.35)" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+                <line x1="50" y1="48" x2="74" y2="69" stroke="rgba(239, 68, 68, 0.35)" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+              </svg>
 
               {/* Cities */}
               <City
                 name="DELHI"
                 type="NATIONAL HUB"
-                top="15%"
-                left="48%"
+                className="top-[8%] sm:top-[12%] left-1/2 -translate-x-1/2"
               />
 
               <City
                 name="JAIPUR"
                 type="REGIONAL HUB"
-                top="40%"
-                left="25%"
+                className="top-[30%] sm:top-[34%] left-[18%] sm:left-[22%] -translate-x-1/2"
               />
 
               <City
                 name="MUMBAI"
                 type="DISTRIBUTION"
-                top="68%"
-                left="25%"
+                className="top-[56%] sm:top-[64%] left-[22%] sm:left-[26%] -translate-x-1/2"
               />
 
               <City
                 name="BENGALURU"
                 type="REGIONAL HUB"
-                top="68%"
-                left="68%"
+                className="top-[56%] sm:top-[64%] left-[78%] sm:left-[74%] -translate-x-1/2"
               />
 
               <City
                 name="KOLKATA"
                 type="DISTRIBUTION"
-                top="40%"
-                left="78%"
+                className="top-[30%] sm:top-[34%] left-[82%] sm:left-[78%] -translate-x-1/2"
               />
 
               {/* Status */}
               <div className="
                 absolute
-                bottom-5
-                left-5
+                bottom-4
+                sm:bottom-5
+                left-1/2
+                -translate-x-1/2
                 flex
                 items-center
                 gap-3
-                rounded-lg
+                rounded-xl
                 border
-                border-slate-200
+                border-slate-200/80
                 bg-white/95
-                px-4
-                py-3
+                backdrop-blur-sm
+                px-5
+                py-2.5
+                sm:py-3
                 shadow-sm
                 dark:border-white/10
-                dark:bg-black/70
+                dark:bg-black/80
                 dark:shadow-none
+                whitespace-nowrap
               ">
-                <span className="h-2 w-2 rounded-full bg-red-500" />
+                <div className="relative flex items-center justify-center">
+                  <span className="absolute h-2 w-2 rounded-full bg-red-500 animate-sonar-ripple pointer-events-none" />
+                  <span className="relative h-2 w-2 rounded-full bg-red-500 animate-heartbeat-pulse" />
+                </div>
 
-                <span className="text-xs font-semibold text-slate-600 dark:text-slate-400">
+                <span className="text-[11px] sm:text-xs font-semibold tracking-wider text-slate-600 dark:text-slate-400">
                   NETWORK STATUS
                 </span>
 
-                <span className="text-xs font-bold text-slate-900 dark:text-white">
+                <span className="text-[11px] sm:text-xs font-bold tracking-wider text-slate-900 dark:text-white">
                   OPERATIONAL
                 </span>
               </div>
@@ -184,24 +203,27 @@ function Network() {
    CITY
 ========================= */
 
-function City({ name, type, top, left }) {
+function City({ name, type, top, left, className = "", style = {} }) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.7 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5 }}
-      className="absolute z-30"
+      className={`absolute z-30 ${className}`}
       style={{
-        top: top,
-        left: left,
+        ...(top ? { top } : {}),
+        ...(left ? { left } : {}),
+        ...style,
       }}
     >
       <div className="flex flex-col items-center">
 
         <div className="
           flex
-          h-12
-          w-12
+          h-9
+          w-9
+          sm:h-12
+          sm:w-12
           items-center
           justify-center
           rounded-full
@@ -212,14 +234,17 @@ function City({ name, type, top, left }) {
           dark:bg-[#0b0b0b]
           dark:shadow-none
         ">
-          <div className="h-2 w-2 rounded-full bg-red-500" />
+          <div className="relative flex items-center justify-center">
+            <span className="absolute h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-red-500 animate-sonar-ripple pointer-events-none" />
+            <span className="relative h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-red-500 animate-heartbeat-pulse" />
+          </div>
         </div>
 
-        <p className="mt-3 text-xs font-bold tracking-[0.15em] text-slate-900 dark:text-white">
+        <p className="mt-2 sm:mt-3 text-[10px] sm:text-xs font-bold tracking-[0.12em] sm:tracking-[0.15em] text-slate-900 dark:text-white">
           {name}
         </p>
 
-        <p className="mt-1 whitespace-nowrap text-[9px] font-bold text-slate-600 dark:text-slate-400">
+        <p className="mt-0.5 sm:mt-1 whitespace-nowrap text-[8px] sm:text-[9px] font-bold text-slate-600 dark:text-slate-400">
           {type}
         </p>
 
